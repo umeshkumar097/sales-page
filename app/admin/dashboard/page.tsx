@@ -76,12 +76,15 @@ export default function AdminDashboard() {
                 })
             });
 
-            if (!res.ok) throw new Error("Failed to send invite");
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error || data.details || "Failed to send invite");
+            }
             
-            setSuccessMessage(`Virtual meeting invite sent successfully to ${lead.name}!`);
+            setSuccessMessage(`Virtual meeting invite sent successfully to ${selectedLead.name}!`);
             setTimeout(() => setSuccessMessage(""), 5000); // Clear after 5 seconds
-        } catch (err) {
-            setError("Error sending invite. Please try again.");
+        } catch (err: any) {
+            setError(err.message || "Error sending invite. Please try again.");
         } finally {
             setSendingInvite(null);
             closeModal();
