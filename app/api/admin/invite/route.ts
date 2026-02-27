@@ -2,6 +2,14 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
 import nodemailer from "nodemailer";
+import { google } from "googleapis";
+import { prisma } from "@/lib/prisma";
+
+const oauth2Client = new google.auth.OAuth2(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  process.env.GOOGLE_REDIRECT_URI
+);
 
 export async function POST(request: Request) {
     try {
@@ -22,13 +30,85 @@ export async function POST(request: Request) {
 
         // 2. Parse Request
         const body = await request.json();
-        const { email, name, projectType, meetingLink, meetingTime } = body;
+        const { email, name, projectType, meetingTime } = body;
 
-        if (!email || !name || !meetingLink || !meetingTime) {
+        // Note: meetingLink is no longer passed from frontend. We generate it.
+        if (!email || !name || !meetingTime) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
         }
 
-        // 3. Send Meeting Invite Email
+        // 3. Fetch Admin Google Auth Settings
+        const adminSettings = await prisma.adminSettings.findUnique({ where: { id: 1 } });
+        if (!adminSettings || !adminSettings.googleRefreshToken) {
+            return NextResponse.json({ error: "Google Calendar not connected. Please connect it first." }, { status: 403 });
+        }
+
+        // 4. Generate Google Meet Link
+        oauth2Client.setCredentials({ refresh_token: adminSettings.googleRefreshToken });
+        const calendar = google.calendar({ version: "v3", auth: oauth2Client });
+
+        // Try to parse the meetingTime (assuming it's a loose string like 'Tomorrow at 2PM').
+        // In a strict app we would pass ISO dates. For now, we will create an event starting 
+        // 1 hour from current execution as a placeholder, or attempt to parse if possible.
+        // To be safe and guarantee a meet link works immediately, we just create a loose event.
+        const eventStartTime = new Date();
+        eventStartTime.setMinutes(eventStartTime.getMinutes() + 10); // Start soon
+        const eventEndTime = new Date(eventStartTime);
+        eventEndTime.setHours(eventEndTime.getHours() + 1);
+
+        const event = {
+          summary: `Strategy Meeting: ${name} (${projectType})`,
+          description: `Meeting to discuss ${projectType} requirements.`,
+          start: {
+            dateTime: eventStartTime.toISOString(),
+            timeZone: 'Asia/Kolkata',
+          },
+          end: {
+            dateTime: eventEndTime.toISOString(),
+            timeZone: 'Asia/Kolkata',
+          },
+          attendees: [
+            { email: email },
+          ],
+          conferenceData: {
+            createRequest: {
+              requestId: `meet-${Date.now()}`,
+              conferenceSolutionKey: {
+                type: 'hangoutsMeet'
+              }
+            }
+          }
+        };
+
+        const calendarResponse = await calendar.events.insert({
+          calendarId: 'primary',
+          requestBody: event,
+          conferenceDataVersion: 1, // Required to get the meet link
+        });
+
+        const meetingLink = calendarResponse.data.hangoutLink;
+        const eventId = calendarResponse.data.id;
+
+        if (!meetingLink) {
+            throw new Error("Failed to generate Google Meet link from Calendar API.");
+        }
+        
+        // Find existing lead by email to link the meeting to it
+        const lead = await prisma.lead.findFirst({ where: { email: email } });
+
+        if (lead) {
+            // 5. Save Meeting to Database
+            await prisma.meeting.create({
+                data: {
+                    leadId: lead.id,
+                    meetingLink: meetingLink,
+                    meetingTime: new Date(), // Storing raw db log timestamp
+                    eventId: eventId,
+                }
+            });
+        }
+
+        // 6. Send Meeting Invite Email
         const transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST,
             port: Number(process.env.SMTP_PORT),

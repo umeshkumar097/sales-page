@@ -16,4 +16,25 @@ model Lead {
   projectType String
   message     String?
   createdAt   DateTime @default(now())
+
+  // Relation to Meetings
+  meetings    Meeting[]
+}
+
+model AdminSettings {
+  id                  Int      @id @default(1)
+  googleRefreshToken  String?  // Stores the OAuth2 refresh token for Google Calendar
+  updatedAt           DateTime @updatedAt
+}
+
+model Meeting {
+  id              Int      @id @default(autoincrement())
+  leadId          Int
+  meetingLink     String   // The generated Google Meet URL
+  meetingTime     DateTime // The scheduled time for the meeting
+  eventId         String?  // The Google Calendar Event ID
+  createdAt       DateTime @default(now())
+
+  // Relations
+  lead            Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
 }

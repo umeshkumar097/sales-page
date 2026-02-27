@@ -20,9 +20,10 @@ export async function GET(request: Request) {
             return NextResponse.json({ error: "Invalid token" }, { status: 401 });
         }
 
-        // Fetch leads ordered by newest first
+        // Fetch leads ordered by newest first, include generated meetings
         const leads = await prisma.lead.findMany({
             orderBy: { createdAt: "desc" },
+            include: { meetings: true }
         });
 
         return NextResponse.json({ leads });
