@@ -1,0 +1,172 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1.5rem 0;
+    transition: all var(--transition-normal);
+    background: transparent;
+}
+
+.scrolled {
+    padding: 1rem 0;
+    background: rgba(5, 5, 17, 0.85);
+    /* var(--bg-primary) with opacity */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logoImage {
+    height: auto;
+    object-fit: contain;
+}
+
+.desktopNav {
+    display: none;
+    gap: 2rem;
+    font-weight: 500;
+}
+
+.desktopNav a {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.desktopNav a:hover {
+    color: var(--text-primary);
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ctaDesktop {
+    display: none;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+}
+
+/* Mobile Toggle */
+.mobileToggle {
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    z-index: 1001;
+    cursor: pointer;
+}
+
+.hamburger {
+    width: 24px;
+    height: 2px;
+    background: var(--text-primary);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s;
+}
+
+.hamburger::before,
+.hamburger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background: var(--text-primary);
+    transition: all 0.3s;
+}
+
+.hamburger::before {
+    top: -8px;
+}
+
+.hamburger::after {
+    top: 8px;
+}
+
+.hamburger.active {
+    background: transparent;
+}
+
+.hamburger.active::before {
+    top: 0;
+    transform: rotate(45deg);
+}
+
+.hamburger.active::after {
+    top: 0;
+    transform: rotate(-45deg);
+}
+
+/* Mobile Nav Dropdown */
+.mobileNav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--bg-primary);
+    padding-top: 5rem;
+    transform: translateY(-100%);
+    transition: transform var(--transition-normal);
+    z-index: 999;
+}
+
+.mobileNav.open {
+    transform: translateY(0);
+}
+
+.mobileNav nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.mobileNav a {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+@media (max-width: 991px) {
+    .header {
+        display: none !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .desktopNav {
+        display: flex;
+    }
+
+    .ctaDesktop {
+        display: inline-flex;
+    }
+
+    .mobileToggle {
+        display: none;
+    }
+
+    .mobileNav {
+        display: none;
+    }
+}

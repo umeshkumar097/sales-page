@@ -1,0 +1,74 @@
+import Link from "next/link";
+import Image from "next/image";
+import styles from "./Footer.module.css";
+
+export default function Footer() {
+    return (
+        <footer className={styles.footer}>
+            <div className="container">
+                <div className={styles.grid}>
+                    {/* Brand & About */}
+                    <div className={styles.brandCol}>
+                        <Link href="/" className={styles.logo}>
+                            <Image
+                                src="/logo.png"
+                                alt="Aiclex Technologies"
+                                width={220}
+                                height={60}
+                                className={styles.logoImage}
+                            />
+                        </Link>
+                        <p className="text-muted">
+                            Performance-driven digital & AI agency delivering custom websites, scalable mobile apps, and business automation systems.
+                        </p>
+                        <div className={styles.trustSignals}>
+                            <span>✓ 8+ Years Experience</span>
+                            <span>✓ 50+ Projects Delivered</span>
+                        </div>
+                    </div>
+
+                    {/* Quick Links */}
+                    <div className={styles.linksCol}>
+                        <h4>Services</h4>
+                        <ul>
+                            <li><Link href="#services">Website Development</Link></li>
+                            <li><Link href="#services">Android App Development</Link></li>
+                            <li><Link href="#services">iOS App Development</Link></li>
+                            <li><Link href="#services">Custom Web Apps</Link></li>
+                            <li><Link href="#services">AI Automation</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Company Links */}
+                    <div className={styles.linksCol}>
+                        <h4>Company</h4>
+                        <ul>
+                            <li><Link href="#about">About Us</Link></li>
+                            <li><Link href="#case-studies">Case Studies</Link></li>
+                            <li><Link href="#process">Our Process</Link></li>
+                            <li><Link href="#faq">FAQ</Link></li>
+                            <li><Link href="#contact">Contact</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* CTA & Contact */}
+                    <div className={styles.contactCol}>
+                        <h4>Ready to Scale?</h4>
+                        <p className="text-muted">Get a custom proposal within 24 hours.</p>
+                        <Link href="#contact" className="btn btn-primary" style={{ marginTop: '1rem', width: '100%' }}>
+                            Get Free Consultation
+                        </Link>
+                    </div>
+                </div>
+
+                <div className={styles.bottom}>
+                    <p>&copy; {new Date().getFullYear()} Aiclex Technologies. All rights reserved. Based in India, Serving Globally.</p>
+                    <div className={styles.legal}>
+                        <Link href="#">Privacy Policy</Link>
+                        <Link href="#">Terms of Service</Link>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    );
+}

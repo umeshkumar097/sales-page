@@ -1,0 +1,294 @@
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 8rem;
+    /* Account for sticky header */
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.heroGrid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 4rem;
+}
+
+.content {
+    text-align: left;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    animation: fadeIn 1s ease-out;
+}
+
+.pulse {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: var(--success);
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+.content h1 {
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-size: clamp(1.125rem, 2vw, 1.25rem);
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+    animation-delay: 0.2s;
+}
+
+.benefits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    animation: fadeIn 1s ease-out;
+    animation-delay: 0.4s;
+    animation-fill-mode: both;
+}
+
+.benefits li {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ctaGroup {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    animation: fadeIn 1s ease-out;
+    animation-delay: 0.6s;
+    animation-fill-mode: both;
+}
+
+.trustBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    padding: 2rem 4rem;
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat h3 {
+    font-size: 2.5rem;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.25rem;
+}
+
+.stat p {
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 1px;
+}
+
+.divider {
+    width: 1px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Background Effects */
+.glowEffect1 {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(5, 5, 17, 0) 70%);
+    border-radius: 50%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.glowEffect2 {
+    position: absolute;
+    bottom: 0;
+    right: 10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, rgba(5, 5, 17, 0) 70%);
+    border-radius: 50%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.heroFormWrapper {
+    animation: fadeIn 1s ease-out;
+    animation-delay: 0.8s;
+    animation-fill-mode: both;
+}
+
+/* Override CTAform specific padding when inside hero */
+.heroFormWrapper :global(.section) {
+    padding: 0 !important;
+}
+
+.heroFormWrapper :global(.container) {
+    padding: 0 !important;
+}
+
+.heroFormWrapper :global(.grid) {
+    grid-template-columns: 1fr !important;
+}
+
+.heroFormWrapper [class*="contentColumn"] {
+    display: none !important;
+}
+
+.heroFormWrapper :global(.formBox) {
+    background: rgba(10, 10, 26, 0.4) !important;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 3rem !important;
+    max-width: 650px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.heroFormWrapper :global(.form)>h3 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.heroFormWrapper :global(.form)>p {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+}
+
+.heroFormWrapper :global(.inputGroup) {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.heroFormWrapper :global(.inputWrapper) {
+    margin-bottom: 1rem;
+}
+
+.heroFormWrapper :global(.checkboxWrapper) label {
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+@media (max-width: 991px) {
+    .heroGrid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .content {
+        text-align: center;
+    }
+
+    .ctaGroup {
+        justify-content: center;
+    }
+
+    .heroFormWrapper {
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .heroFormWrapper :global(.inputGroup) {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: auto;
+        padding: 8rem 0 4rem;
+    }
+
+    .trustBar {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2rem;
+    }
+
+    .divider {
+        width: 60px;
+        height: 1px;
+    }
+
+    .ctaGroup {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .ctaGroup a {
+        width: 100%;
+    }
+}
