@@ -23,6 +23,12 @@ export default function AdminDashboard() {
     const [error, setError] = useState("");
     const [sendingInvite, setSendingInvite] = useState<number | null>(null);
     const [successMessage, setSuccessMessage] = useState("");
+    
+    // Modal State
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+    const [meetingLink, setMeetingLink] = useState("");
+    const [meetingTime, setMeetingTime] = useState("");
 
     useEffect(() => {
         fetchLeads();
@@ -52,15 +58,21 @@ export default function AdminDashboard() {
         router.push("/admin/login");
     };
 
-    const handleSendInvite = async (lead: Lead) => {
-        setSendingInvite(lead.id);
+        if (!selectedLead) return;
+        setSendingInvite(selectedLead.id);
         setError("");
         setSuccessMessage("");
         try {
             const res = await fetch("/api/admin/invite", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email: lead.email, name: lead.name, projectType: lead.projectType })
+                body: JSON.stringify({ 
+                    email: selectedLead.email, 
+                    name: selectedLead.name, 
+                    projectType: selectedLead.projectType,
+                    meetingLink,
+                    meetingTime
+                })
             });
 
             if (!res.ok) throw new Error("Failed to send invite");
@@ -71,13 +83,77 @@ export default function AdminDashboard() {
             setError("Error sending invite. Please try again.");
         } finally {
             setSendingInvite(null);
+            closeModal();
         }
+    };
+
+    const openModal = (lead: Lead) => {
+        setSelectedLead(lead);
+        setMeetingLink("");
+        setMeetingTime("");
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedLead(null);
     };
 
     if (loading) return <div className={styles.loading}>Loading Dashboard...</div>;
 
     return (
         <div className={styles.dashboardContainer}>
+            {/* Modal Overlay */}
+            {isModalOpen && (
+                <div className={styles.modalOverlay}>
+                    <div className={`glass ${styles.modalContent}`}>
+                        <div className={styles.modalHeader}>
+                            <h3>Schedule Meeting</h3>
+                            <button onClick={closeModal} className={styles.closeBtn}>&times;</button>
+                        </div>
+                        <div className={styles.modalBody}>
+                            <p style={{marginBottom: '1rem', color: 'var(--text-secondary)', fontSize: '0.9rem'}}>
+                                Sending invite to <strong>{selectedLead?.name}</strong> for <strong>{selectedLead?.projectType}</strong>.
+                            </p>
+                            
+                            <div className={styles.inputGroup}>
+                                <label htmlFor="meetingLink">Meeting Link (Google Meet / Zoom)</label>
+                                <input 
+                                    type="url" 
+                                    id="meetingLink" 
+                                    className="form-control"
+                                    value={meetingLink}
+                                    onChange={(e) => setMeetingLink(e.target.value)}
+                                    placeholder="https://meet.google.com/xxx-xxxx-xxx"
+                                />
+                            </div>
+                            
+                            <div className={styles.inputGroup} style={{marginTop: '1rem'}}>
+                                <label htmlFor="meetingTime">Meeting Date & Time</label>
+                                <input 
+                                    type="text" 
+                                    id="meetingTime" 
+                                    className="form-control"
+                                    value={meetingTime}
+                                    onChange={(e) => setMeetingTime(e.target.value)}
+                                    placeholder="e.g. Tomorrow at 2:00 PM IST"
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.modalFooter} style={{marginTop: '1.5rem', display: 'flex', gap: '1rem', justifyContent: 'flex-end'}}>
+                            <button onClick={closeModal} className="btn" style={{background: 'transparent', border: '1px solid #334155'}}>Cancel</button>
+                            <button 
+                                onClick={handleSendInvite} 
+                                disabled={!meetingLink || !meetingTime || sendingInvite !== null}
+                                className="btn btn-primary"
+                            >
+                                {sendingInvite !== null ? "Sending..." : "Send Secure Invite"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <header className={styles.header}>
                 <div className={styles.logo}>
                     <h2>Aiclex<span className="text-gradient">.</span></h2>
@@ -154,12 +230,11 @@ export default function AdminDashboard() {
                                             </td>
                                             <td>
                                                 <button 
-                                                    onClick={() => handleSendInvite(lead)}
-                                                    disabled={sendingInvite === lead.id}
+                                                    onClick={() => openModal(lead)}
                                                     className="btn btn-primary"
                                                     style={{ padding: "0.4rem 0.8rem", fontSize: "0.8rem", width: "100%" }}
                                                 >
-                                                    {sendingInvite === lead.id ? "Sending..." : "Send Invite"}
+                                                    Schedule
                                                 </button>
                                             </td>
                                         </tr>

@@ -22,9 +22,9 @@ export async function POST(request: Request) {
 
         // 2. Parse Request
         const body = await request.json();
-        const { email, name, projectType } = body;
+        const { email, name, projectType, meetingLink, meetingTime } = body;
 
-        if (!email || !name) {
+        if (!email || !name || !meetingLink || !meetingTime) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
         }
 
@@ -58,12 +58,18 @@ export async function POST(request: Request) {
             </p>
             
             <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-bottom: 35px;">
-              I would like to personally invite you to a brief 15-minute Strategy Meeting via Google Meet or Zoom. We will discuss your core objectives, technical constraints, and outline a tailored roadmap.
+              I would like to personally invite you to a brief Strategy Meeting to discuss your core objectives, technical constraints, and outline a tailored roadmap.
             </p>
 
+            <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 35px; text-align: left;">
+                <p style="margin: 0 0 10px 0; color: #64748b; font-size: 14px; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;">Meeting Details</p>
+                <p style="margin: 0 0 8px 0; color: #0f172a; font-size: 16px;"><strong>Time:</strong> ${meetingTime}</p>
+                <p style="margin: 0; color: #0f172a; font-size: 16px;"><strong>Link:</strong> <a href="${meetingLink}" style="color: #3b82f6;">Join Meeting Here</a></p>
+            </div>
+
             <div style="text-align: center; margin-bottom: 40px;">
-                <a href="mailto:info@aiclex.in?subject=Meeting Request: ${name}" style="background-color: #3b82f6; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; display: inline-block;">
-                    Schedule a Meeting
+                <a href="${meetingLink}" style="background-color: #3b82f6; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; display: inline-block;">
+                    Join Virtual Meeting
                 </a>
             </div>
 
