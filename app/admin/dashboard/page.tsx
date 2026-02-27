@@ -21,6 +21,8 @@ export default function AdminDashboard() {
     const [leads, setLeads] = useState<Lead[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [sendingInvite, setSendingInvite] = useState<number | null>(null);
+    const [successMessage, setSuccessMessage] = useState("");
 
     useEffect(() => {
         fetchLeads();
@@ -50,6 +52,28 @@ export default function AdminDashboard() {
         router.push("/admin/login");
     };
 
+    const handleSendInvite = async (lead: Lead) => {
+        setSendingInvite(lead.id);
+        setError("");
+        setSuccessMessage("");
+        try {
+            const res = await fetch("/api/admin/invite", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: lead.email, name: lead.name, projectType: lead.projectType })
+            });
+
+            if (!res.ok) throw new Error("Failed to send invite");
+            
+            setSuccessMessage(`Virtual meeting invite sent successfully to ${lead.name}!`);
+            setTimeout(() => setSuccessMessage(""), 5000); // Clear after 5 seconds
+        } catch (err) {
+            setError("Error sending invite. Please try again.");
+        } finally {
+            setSendingInvite(null);
+        }
+    };
+
     if (loading) return <div className={styles.loading}>Loading Dashboard...</div>;
 
     return (
@@ -77,7 +101,10 @@ export default function AdminDashboard() {
                     </div>
                 </div>
 
+                </div>
+
                 {error && <div className={styles.error}>{error}</div>}
+                {successMessage && <div className={styles.success} style={{background: 'rgba(34, 197, 94, 0.1)', border: '1px solid rgba(34, 197, 94, 0.3)', color: '#86efac', padding: '1rem', borderRadius: 'var(--radius-sm)', marginBottom: '2rem'}}>{successMessage}</div>}
 
                 <div className={`glass ${styles.tableContainer}`}>
                     <div className={styles.tableHeader}>
@@ -99,6 +126,7 @@ export default function AdminDashboard() {
                                         <th>Contact</th>
                                         <th>Service</th>
                                         <th>Message</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -125,6 +153,16 @@ export default function AdminDashboard() {
                                             </td>
                                             <td className={styles.messageCell}>
                                                 {lead.message ? lead.message : <span className="text-muted">No message provided.</span>}
+                                            </td>
+                                            <td>
+                                                <button 
+                                                    onClick={() => handleSendInvite(lead)}
+                                                    disabled={sendingInvite === lead.id}
+                                                    className="btn btn-primary"
+                                                    style={{ padding: "0.4rem 0.8rem", fontSize: "0.8rem", width: "100%" }}
+                                                >
+                                                    {sendingInvite === lead.id ? "Sending..." : "Send Invite"}
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
