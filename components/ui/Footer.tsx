@@ -64,9 +64,17 @@ export default function Footer() {
                 <div className={styles.bottom}>
                     <p>&copy; {new Date().getFullYear()} Aiclex Technologies. All rights reserved. Based in India, Serving Globally.</p>
                     <div className={styles.legal}>
-                        <Link href="#">Privacy Policy</Link>
-                        <Link href="#">Terms of Service</Link>
+                        <Link href="/privacy">Privacy Policy</Link>
+                        <Link href="/terms">Terms of Service</Link>
                     </div>
+                </div>
+
+                <div className={styles.disclaimer} style={{ marginTop: "2rem", fontSize: "0.75rem", color: "var(--text-muted)", textAlign: "center", borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "1.5rem" }}>
+                    <p>
+                        This site is not a part of the Facebook website or Facebook Inc. Additionally, This site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.
+                        <br />
+                        Google is a trademark of Google LLC. This site is not a part of the Google website or Google Inc.
+                    </p>
                 </div>
             </div>
         </footer>

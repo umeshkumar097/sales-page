@@ -9,7 +9,8 @@ export default function Services() {
             desc: "Fast, secure, and SEO-optimized corporate & ecommerce websites that convert visitors into buyers.",
             impact: "Increase brand trust and online sales by 200%.",
             for: "Businesses, Coaches, E-commerce",
-            icon: "🌐"
+            icon: "🌐",
+            image: "/website_mockup.png"
         },
         {
             title: "Custom Web Applications",
