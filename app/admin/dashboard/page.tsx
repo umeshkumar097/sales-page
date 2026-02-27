@@ -58,6 +58,7 @@ export default function AdminDashboard() {
         router.push("/admin/login");
     };
 
+    const handleSendInvite = async () => {
         if (!selectedLead) return;
         setSendingInvite(selectedLead.id);
         setError("");

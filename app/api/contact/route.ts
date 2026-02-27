@@ -109,7 +109,7 @@ export async function POST(request: Request) {
         const adminMailOptions = {
             from: `"Aiclex System" <${process.env.SMTP_FROM || "info@aiclex.in"}>`,
             to: process.env.ADMIN_EMAIL || "info@aiclex.in",
-            subject: `New Lead Alert: ${projectType} from ${name}`,
+            subject: `New Lead from Ads: ${projectType} from ${name}`,
             html: `
         <h3>New Lead Captured</h3>
         <p><strong>Name:</strong> ${name}</p>
