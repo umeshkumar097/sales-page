@@ -101,8 +101,6 @@ export default function AdminDashboard() {
                     </div>
                 </div>
 
-                </div>
-
                 {error && <div className={styles.error}>{error}</div>}
                 {successMessage && <div className={styles.success} style={{background: 'rgba(34, 197, 94, 0.1)', border: '1px solid rgba(34, 197, 94, 0.3)', color: '#86efac', padding: '1rem', borderRadius: 'var(--radius-sm)', marginBottom: '2rem'}}>{successMessage}</div>}
 
