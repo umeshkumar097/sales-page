@@ -39,42 +39,67 @@ export async function POST(request: Request) {
             to: email, // send to the user who filled the form
             subject: "Thank You for Contacting Aiclex Technologies",
             html: `
-        <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #0B0F19; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
-          <!-- Header Area -->
-          <div style="background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%); padding: 40px 30px; text-align: center; border-bottom: 2px solid #3b82f6;">
-            <!-- Attempting to load logo from domain, fallback to stylized text -->
-            <img src="https://aiclex.in/logo.png" alt="Aiclex Technologies" style="max-height: 50px; margin-bottom: 10px;" onerror="this.onerror=null;this.outerHTML='<h1 style=\\'color:#fff;margin:0;font-size:28px;letter-spacing:1px;\\'>AICLEX</h1>';" />
-          </div>
+        <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 650px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);">
           
-          <!-- Body Area -->
-          <div style="padding: 40px 30px; background-color: #ffffff;">
-            <h2 style="color: #1e293b; font-size: 24px; margin-top: 0;">Hi ${name},</h2>
-            <p style="color: #475569; font-size: 16px; line-height: 1.6;">Thank you so much for reaching out to us! We are thrilled to connect with you.</p>
+          <!-- Hero / Header with Graphic Background -->
+          <div style="background-color: #0f172a; background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200'); background-size: cover; background-position: center; padding: 60px 40px; text-align: center; position: relative;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(30,58,138,0.75));"></div>
+            <div style="position: relative; z-index: 1;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 38px; letter-spacing: 3px; font-weight: 800; text-transform: uppercase;">AICLEX</h1>
+              <p style="color: #93c5fd; font-size: 14px; letter-spacing: 5px; text-transform: uppercase; margin-top: 8px;">Technologies</p>
+            </div>
+          </div>
+
+          <!-- Body -->
+          <div style="padding: 50px 40px; background-color: #ffffff;">
+            <h2 style="color: #0f172a; font-size: 26px; margin: 0 0 20px 0; font-weight: 700;">Hello ${name},</h2>
             
-            <div style="background-color: #f8fafc; border-left: 4px solid #3b82f6; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;">
-                <p style="margin: 0; color: #334155; font-size: 15px;">We have successfully received your inquiry regarding <strong>${projectType}</strong>.</p>
+            <p style="color: #475569; font-size: 16px; line-height: 1.8; margin-bottom: 30px;">
+              Thank you for considering Aiclex Technologies as your technical partner. We have successfully received your inquiry for <strong>${projectType}</strong> and our leadership team is already reviewing your requirements.
+            </p>
+            
+            <!-- Info Card -->
+            <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 25px; margin-bottom: 35px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="border: none;">
+                <tr>
+                  <td width="60" valign="top">
+                    <div style="background-color: #eff6ff; width: 48px; height: 48px; border-radius: 50%; text-align: center; line-height: 48px; font-size: 24px;">🚀</div>
+                  </td>
+                  <td>
+                    <h4 style="color: #0f172a; margin: 0 0 8px 0; font-size: 18px;">Next Steps</h4>
+                    <p style="color: #5f708a; margin: 0; font-size: 15px; line-height: 1.6;">A senior consultant will analyze your business use-case and contact you within <strong>24 hours</strong> with a strategic roadmap.</p>
+                  </td>
+                </tr>
+              </table>
             </div>
 
-            <p style="color: #475569; font-size: 16px; line-height: 1.6;">One of our senior technical consultants is currently reviewing your project requirements. We will analyze your needs and connect with you within the next <strong>24 hours</strong> to discuss a tailored strategy and the next steps.</p>
-            
-            <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 35px;">
+            <!-- Signature block with Profile Picture -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 40px; border-top: 1px solid #e2e8f0; padding-top: 35px;">
               <tr>
-                <td>
-                  <p style="color: #1e293b; font-size: 16px; font-weight: 600; margin: 0;">Best Regards,</p>
-                  <p style="color: #3b82f6; font-size: 18px; font-weight: bold; margin: 5px 0 0 0;">Team Aiclex Technologies</p>
+                <td width="80" valign="middle">
+                  <!-- Professional Profile Picture -->
+                  <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=200&h=200" alt="Executive" style="width: 65px; height: 65px; border-radius: 50%; object-fit: cover; display: block; border: 2px solid #e2e8f0;" />
+                </td>
+                <td valign="middle">
+                  <p style="margin: 0; color: #0f172a; font-size: 18px; font-weight: 700;">Umesh Kumar</p>
+                  <p style="margin: 3px 0 0 0; color: #3b82f6; font-size: 14px; font-weight: 600;">Founder & CEO</p>
+                  <p style="margin: 3px 0 0 0; color: #64748b; font-size: 13px;">Aiclex Technologies</p>
                 </td>
               </tr>
             </table>
           </div>
           
-          <!-- Footer Area -->
-          <div style="background-color: #f1f5f9; padding: 25px 30px; text-align: center; font-size: 13px; color: #64748b; border-top: 1px solid #e2e8f0;">
-            <p style="margin: 0 0 10px 0;">Transforming Businesses Through Code & AI.</p>
-            <a href="https://aiclex.in" style="color: #3b82f6; text-decoration: none; font-weight: 600;">www.aiclex.in</a> 
-            <span style="color: #cbd5e1; margin: 0 8px;">|</span>
-            <a href="mailto:info@aiclex.in" style="color: #3b82f6; text-decoration: none; font-weight: 600;">info@aiclex.in</a>
-            <span style="color: #cbd5e1; margin: 0 8px;">|</span>
-            <span style="color: #475569; font-weight: 600;">+91 98718 81183</span>
+          <!-- Footer -->
+          <div style="background-color: #0f172a; padding: 35px 40px; text-align: center;">
+            <p style="color: #94a3b8; font-size: 15px; margin: 0 0 20px 0; font-weight: 500;">Engineering Growth Through Custom Software</p>
+            <div style="margin-bottom: 25px;">
+              <a href="https://aiclex.in" style="color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; margin: 0 12px; display: inline-block;">Website</a>
+              <span style="color: #334155;">|</span>
+              <a href="mailto:info@aiclex.in" style="color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; margin: 0 12px; display: inline-block;">Email Us</a>
+              <span style="color: #334155;">|</span>
+              <a href="tel:+919871881183" style="color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; margin: 0 12px; display: inline-block;">+91 98718 81183</a>
+            </div>
+            <p style="color: #475569; font-size: 12px; margin: 0;">&copy; ${new Date().getFullYear()} Aiclex Technologies. All rights reserved.</p>
           </div>
         </div>
       `,
