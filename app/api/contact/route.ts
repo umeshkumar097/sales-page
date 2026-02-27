@@ -35,30 +35,54 @@ export async function POST(request: Request) {
         });
 
         const mailOptions = {
-            from: `"Aiclex Technologies" <${process.env.SMTP_USER}>`,
+            from: `"Aiclex Technologies" <${process.env.SMTP_FROM || "info@aiclex.in"}>`,
             to: email, // send to the user who filled the form
             subject: "Thank You for Contacting Aiclex Technologies",
             html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
-          <h2 style="color: #3b82f6;">Hi ${name},</h2>
-          <p>Thank you so much for reaching out to us!</p>
-          <p>We have successfully received your inquiry regarding <strong>${projectType}</strong>.</p>
-          <p>One of our senior technical consultants is reviewing your requirements and we will connect with you within the next <strong>24 hours</strong> to discuss the next steps.</p>
-          <br/>
-          <p>Best Regards,</p>
-          <p><strong>Team Aiclex Technologies</strong></p>
-          <small>
-            <a href="https://aiclex.in" style="color: #3b82f6;">www.aiclex.in</a> | 
-            <a href="mailto:info@aiclex.in" style="color: #3b82f6;">info@aiclex.in</a> | 
-            +91 98718 81183
-          </small>
+        <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #0B0F19; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+          <!-- Header Area -->
+          <div style="background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%); padding: 40px 30px; text-align: center; border-bottom: 2px solid #3b82f6;">
+            <!-- Attempting to load logo from domain, fallback to stylized text -->
+            <img src="https://aiclex.in/logo.png" alt="Aiclex Technologies" style="max-height: 50px; margin-bottom: 10px;" onerror="this.onerror=null;this.outerHTML='<h1 style=\\'color:#fff;margin:0;font-size:28px;letter-spacing:1px;\\'>AICLEX</h1>';" />
+          </div>
+          
+          <!-- Body Area -->
+          <div style="padding: 40px 30px; background-color: #ffffff;">
+            <h2 style="color: #1e293b; font-size: 24px; margin-top: 0;">Hi ${name},</h2>
+            <p style="color: #475569; font-size: 16px; line-height: 1.6;">Thank you so much for reaching out to us! We are thrilled to connect with you.</p>
+            
+            <div style="background-color: #f8fafc; border-left: 4px solid #3b82f6; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;">
+                <p style="margin: 0; color: #334155; font-size: 15px;">We have successfully received your inquiry regarding <strong>${projectType}</strong>.</p>
+            </div>
+
+            <p style="color: #475569; font-size: 16px; line-height: 1.6;">One of our senior technical consultants is currently reviewing your project requirements. We will analyze your needs and connect with you within the next <strong>24 hours</strong> to discuss a tailored strategy and the next steps.</p>
+            
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 35px;">
+              <tr>
+                <td>
+                  <p style="color: #1e293b; font-size: 16px; font-weight: 600; margin: 0;">Best Regards,</p>
+                  <p style="color: #3b82f6; font-size: 18px; font-weight: bold; margin: 5px 0 0 0;">Team Aiclex Technologies</p>
+                </td>
+              </tr>
+            </table>
+          </div>
+          
+          <!-- Footer Area -->
+          <div style="background-color: #f1f5f9; padding: 25px 30px; text-align: center; font-size: 13px; color: #64748b; border-top: 1px solid #e2e8f0;">
+            <p style="margin: 0 0 10px 0;">Transforming Businesses Through Code & AI.</p>
+            <a href="https://aiclex.in" style="color: #3b82f6; text-decoration: none; font-weight: 600;">www.aiclex.in</a> 
+            <span style="color: #cbd5e1; margin: 0 8px;">|</span>
+            <a href="mailto:info@aiclex.in" style="color: #3b82f6; text-decoration: none; font-weight: 600;">info@aiclex.in</a>
+            <span style="color: #cbd5e1; margin: 0 8px;">|</span>
+            <span style="color: #475569; font-weight: 600;">+91 98718 81183</span>
+          </div>
         </div>
       `,
         };
 
         // Also send notification to Admin
         const adminMailOptions = {
-            from: `"Aiclex System" <${process.env.SMTP_USER}>`,
+            from: `"Aiclex System" <${process.env.SMTP_FROM || "info@aiclex.in"}>`,
             to: process.env.ADMIN_EMAIL || "info@aiclex.in",
             subject: `New Lead Alert: ${projectType} from ${name}`,
             html: `
