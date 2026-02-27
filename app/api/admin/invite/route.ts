@@ -6,7 +6,7 @@ import nodemailer from "nodemailer";
 export async function POST(request: Request) {
     try {
         // 1. Verify Admin Authentication
-        const cookieStore = cookies();
+        const cookieStore = await cookies();
         const token = cookieStore.get("admin_token")?.value;
 
         if (!token) {
