@@ -1,0 +1,65 @@
+
+> sales-landing-aphe@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.39:3000
+- Environments: .env
+
+✓ Starting...
+✓ Ready in 1589ms
+ GET /admin/dashboard 200 in 1445ms (compile: 478ms, render: 967ms)
+ GET /api/admin/leads 200 in 3.5s (compile: 155ms, render: 3.3s)
+ GET /api/admin/leads 401 in 7ms (compile: 2ms, render: 4ms)
+ GET /api/admin/google/auth 307 in 2.4s (compile: 2.3s, render: 13ms)
+Error exchanging Google Auth code: Error: invalid_client
+    at async GET (app/api/admin/google/callback/route.ts:22:24)
+  20 |
+  21 |     // Exchange the auth code for a token pack
+> 22 |     const { tokens } = await oauth2Client.getToken(code);
+     |                        ^
+  23 |     
+  24 |     // Only update if we actually got a refresh token
+  25 |     // Google only sends this the FIRST time the user consents, or if we forced prompt: 'consent' {
+  config: [Object],
+  response: [Response],
+  code: 401,
+  status: 401,
+  error: undefined,
+  [cause]: [Object]
+}
+ GET /api/admin/google/callback?iss=https://accounts.google.com&code=4/0AfrIepB3sVc-kSGf0YYg7gP3QY6PtzOStS-Rx2R2fsnjs4yIG9uYQR6fEsD7MDFghIsc3A&scope=https://www.googleapis.com/auth/calendar.events%20https://www.googleapis.com/auth/calendar.readonly 307 in 729ms (compile: 91ms, render: 638ms)
+ GET /admin/dashboard?error=GoogleServerAuthFailed 200 in 340ms (compile: 8ms, render: 333ms)
+ GET /admin/dashboard 200 in 55ms (compile: 12ms, render: 43ms)
+ GET /api/admin/leads 200 in 933ms (compile: 9ms, render: 924ms)
+ GET /api/admin/leads 200 in 557ms (compile: 6ms, render: 551ms)
+ GET /api/admin/google/auth 307 in 38ms (compile: 27ms, render: 12ms)
+Error exchanging Google Auth code: Error: invalid_client
+    at async GET (app/api/admin/google/callback/route.ts:22:24)
+  20 |
+  21 |     // Exchange the auth code for a token pack
+> 22 |     const { tokens } = await oauth2Client.getToken(code);
+     |                        ^
+  23 |     
+  24 |     // Only update if we actually got a refresh token
+  25 |     // Google only sends this the FIRST time the user consents, or if we forced prompt: 'consent' {
+  config: [Object],
+  response: [Response],
+  code: 401,
+  status: 401,
+  error: undefined,
+  [cause]: [Object]
+}
+ GET /api/admin/google/callback?iss=https://accounts.google.com&code=4/0AfrIepDH_gf5IPSEem4-3mZhO9kFfal0Qqf0dOfslZrqhbo69BBwfdnQteWiuyYkQKh93w&scope=https://www.googleapis.com/auth/calendar.events%20https://www.googleapis.com/auth/calendar.readonly 307 in 348ms (compile: 7ms, render: 341ms)
+ GET /admin/dashboard?error=GoogleServerAuthFailed 200 in 446ms (compile: 6ms, render: 440ms)
+ GET /admin/dashboard 200 in 48ms (compile: 15ms, render: 33ms)
+ GET /api/admin/leads 200 in 944ms (compile: 4ms, render: 940ms)
+ GET /api/admin/leads 200 in 644ms (compile: 1876µs, render: 643ms)
+  Reload env: .env
+ GET /admin/dashboard 200 in 1039ms (compile: 749ms, render: 291ms)
+ GET /api/admin/leads 401 in 264ms (compile: 232ms, render: 32ms)
+ GET /admin/login 200 in 2.6s (compile: 2.6s, render: 56ms)
+✓ Compiled in 0ms
+ GET /admin/login 200 in 4.0s (compile: 2.6s, render: 1396ms)
+ GET /admin/login 200 in 4.1s (compile: 1104ms, render: 3.0s)
