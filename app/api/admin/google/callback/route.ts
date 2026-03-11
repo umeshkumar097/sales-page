@@ -2,10 +2,19 @@ import { NextResponse } from "next/server";
 import { google } from "googleapis";
 import { prisma } from "@/lib/prisma";
 
+const getRedirectUri = () => {
+  let uri = process.env.GOOGLE_REDIRECT_URI || "http://localhost:3000/api/admin/google/callback";
+  // Force HTTPS in production to prevent Google OAuth 400 errors if user accidentally typed http:// in Vercel
+  if (uri.includes("aiclex.in") && uri.startsWith("http://")) {
+    uri = uri.replace("http://", "https://");
+  }
+  return uri;
+};
+
 const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
-  process.env.GOOGLE_REDIRECT_URI
+  getRedirectUri()
 );
 
 export async function GET(request: Request) {
