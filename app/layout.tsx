@@ -36,14 +36,14 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://aiclex.in'),
+  metadataBase: new URL('https://m.aiclex.in'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: "Aiclex Technologies | Performance-Driven Digital Agency",
     description: "Build high-converting digital assets with Aiclex Technologies. We deliver world-class websites, mobile apps, and AI automation solutions for maximum ROI.",
-    url: "https://aiclex.in",
+    url: "https://m.aiclex.in",
     siteName: "Aiclex Technologies",
     images: [
       {

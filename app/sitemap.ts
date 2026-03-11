@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 
-const baseUrl = 'https://aiclex.in'; // Replace with actual domain
+const baseUrl = 'https://m.aiclex.in'; // Replace with actual domain
 
 // Top 30 tech hubs and metropolitan cities in India for targeted keyword landing pages
 const targetCities = [
