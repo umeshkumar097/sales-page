@@ -1,15 +1,47 @@
 "use client";
 
+import { useState } from "react";
 import styles from "./Clients.module.css";
+
+const LogoItem = ({ client }: { client: { name: string, domain: string } }) => {
+    const [errorLevel, setErrorLevel] = useState(0);
+
+    // Fallback 1: icon.horse (often bypasses adblockers and guarantees favicons)
+    // Fallback 2: CSS Initial fallback
+    
+    if (errorLevel >= 2) {
+        return (
+            <div className={styles.cssFallback}>
+                <div className={styles.initialsBg}>
+                    {client.name.substring(0, 2).toUpperCase()}
+                </div>
+                <span className={styles.fallbackText}>{client.name}</span>
+            </div>
+        );
+    }
+
+    const src = errorLevel === 0 
+        ? `https://logo.clearbit.com/${client.domain}`
+        : `https://icon.horse/icon/${client.domain}`;
+
+    return (
+        <img 
+            src={src} 
+            alt={client.name}
+            className={errorLevel === 0 ? styles.logo : `${styles.logo} ${styles.faviconLogo}`}
+            onError={() => setErrorLevel(prev => prev + 1)}
+        />
+    );
+};
 
 export default function Clients() {
     const clientsList = [
         { name: "Shoolini University", domain: "shooliniuniversity.com" },
         { name: "Aditech ICT Pvt. Ltd.", domain: "aditech.in" },
         { name: "Total Solutions", domain: "totalsolutions.in" },
-        { name: "CRUX Management Services (P) Ltd.", domain: "cruxmanagement.com" },
+        { name: "CRUX Management Services", domain: "cruxmanagement.com" },
         { name: "Sannam S4 Group", domain: "sannams4.com" },
-        { name: "Clever Personal Branding", domain: "clever.in" },
+        { name: "Clever", domain: "clever.in" },
         { name: "Plum Insight", domain: "pluminsight.com" },
         { name: "infedis INFOTECH", domain: "infedis.com" },
         { name: "RC Consultancy", domain: "rcconsultancy.in" },
@@ -30,15 +62,7 @@ export default function Clients() {
                 <div className={styles.grid}>
                     {clientsList.map((client, index) => (
                         <div key={index} className={`glass ${styles.card}`} data-aos="fade-up" data-aos-delay={index * 50}>
-                            <img 
-                                src={`https://logo.clearbit.com/${client.domain}`} 
-                                alt={client.name}
-                                className={styles.logo}
-                                onError={(e) => {
-                                    e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(client.name)}&background=ffffff&color=2563eb&bold=true`;
-                                    e.currentTarget.className = `${styles.logo} ${styles.fallbackLogo}`;
-                                }}
-                            />
+                            <LogoItem client={client} />
                         </div>
                     ))}
                 </div>

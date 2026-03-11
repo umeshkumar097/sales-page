@@ -1,6 +1,35 @@
 "use client";
 
+import { useState } from "react";
 import styles from "./Partners.module.css";
+
+const LogoItem = ({ partner }: { partner: { name: string, domain: string } }) => {
+    const [errorLevel, setErrorLevel] = useState(0);
+
+    if (errorLevel >= 2) {
+        return (
+            <div className={styles.cssFallback}>
+                <div className={styles.initialsBg}>
+                    {partner.name.substring(0, 2).toUpperCase()}
+                </div>
+                <span className={styles.fallbackText}>{partner.name}</span>
+            </div>
+        );
+    }
+
+    const src = errorLevel === 0 
+        ? `https://logo.clearbit.com/${partner.domain}`
+        : `https://icon.horse/icon/${partner.domain}`;
+
+    return (
+        <img 
+            src={src} 
+            alt={partner.name}
+            className={errorLevel === 0 ? styles.logo : `${styles.logo} ${styles.faviconLogo}`}
+            onError={() => setErrorLevel(prev => prev + 1)}
+        />
+    );
+};
 
 export default function Partners() {
     const partnersList = [
@@ -31,15 +60,7 @@ export default function Partners() {
                 <div className={styles.grid}>
                     {partnersList.map((partner, index) => (
                         <div key={index} className={`glass ${styles.card}`} data-aos="fade-up" data-aos-delay={index * 50}>
-                            <img 
-                                src={`https://logo.clearbit.com/${partner.domain}`} 
-                                alt={partner.name}
-                                className={styles.logo}
-                                onError={(e) => {
-                                    e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(partner.name)}&background=ffffff&color=2563eb&bold=true`;
-                                    e.currentTarget.className = `${styles.logo} ${styles.fallbackLogo}`;
-                                }}
-                            />
+                            <LogoItem partner={partner} />
                         </div>
                     ))}
                 </div>
