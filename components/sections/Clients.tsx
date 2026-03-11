@@ -1,36 +1,34 @@
-"use client";
-
-import { useState } from "react";
 import styles from "./Clients.module.css";
 
 const LogoItem = ({ client }: { client: { name: string, domain: string } }) => {
-    const [errorLevel, setErrorLevel] = useState(0);
-
-    // Fallback 1: icon.horse (often bypasses adblockers and guarantees favicons)
-    // Fallback 2: CSS Initial fallback
+    // Generate deterministic colors based on company name
+    const colors = [
+        { bg: 'rgba(59, 130, 246, 0.15)', text: '#3b82f6' }, // Blue
+        { bg: 'rgba(220, 38, 38, 0.15)', text: '#ef4444' },   // Red
+        { bg: 'rgba(22, 163, 74, 0.15)', text: '#22c55e' },   // Green
+        { bg: 'rgba(192, 38, 211, 0.15)', text: '#d946ef' },  // Fuchsia
+        { bg: 'rgba(217, 119, 6, 0.15)', text: '#f59e0b' },   // Amber
+        { bg: 'rgba(147, 51, 234, 0.15)', text: '#a855f7' },  // Purple
+        { bg: 'rgba(8, 145, 178, 0.15)', text: '#06b6d4' }    // Cyan
+    ];
     
-    if (errorLevel >= 2) {
-        return (
-            <div className={styles.cssFallback}>
-                <div className={styles.initialsBg}>
-                    {client.name.substring(0, 2).toUpperCase()}
-                </div>
-                <span className={styles.fallbackText}>{client.name}</span>
-            </div>
-        );
+    // Simple string hash
+    let hash = 0;
+    for (let i = 0; i < client.name.length; i++) {
+        hash = client.name.charCodeAt(i) + ((hash << 5) - hash);
     }
+    const colorIndex = Math.abs(hash) % colors.length;
+    const color = colors[colorIndex];
 
-    const src = errorLevel === 0 
-        ? `https://logo.clearbit.com/${client.domain}`
-        : `https://icon.horse/icon/${client.domain}`;
+    const initials = client.name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
 
     return (
-        <img 
-            src={src} 
-            alt={client.name}
-            className={errorLevel === 0 ? styles.logo : `${styles.logo} ${styles.faviconLogo}`}
-            onError={() => setErrorLevel(prev => prev + 1)}
-        />
+        <div className={styles.cssFallback}>
+            <div className={styles.initialsBg} style={{ backgroundColor: color.bg, color: color.text }}>
+                {initials}
+            </div>
+            <span className={styles.fallbackText}>{client.name}</span>
+        </div>
     );
 };
 

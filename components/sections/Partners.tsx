@@ -1,33 +1,34 @@
-"use client";
-
-import { useState } from "react";
 import styles from "./Partners.module.css";
 
 const LogoItem = ({ partner }: { partner: { name: string, domain: string } }) => {
-    const [errorLevel, setErrorLevel] = useState(0);
-
-    if (errorLevel >= 2) {
-        return (
-            <div className={styles.cssFallback}>
-                <div className={styles.initialsBg}>
-                    {partner.name.substring(0, 2).toUpperCase()}
-                </div>
-                <span className={styles.fallbackText}>{partner.name}</span>
-            </div>
-        );
+    // Generate deterministic colors based on company name
+    const colors = [
+        { bg: 'rgba(59, 130, 246, 0.15)', text: '#3b82f6' }, // Blue
+        { bg: 'rgba(220, 38, 38, 0.15)', text: '#ef4444' },   // Red
+        { bg: 'rgba(22, 163, 74, 0.15)', text: '#22c55e' },   // Green
+        { bg: 'rgba(192, 38, 211, 0.15)', text: '#d946ef' },  // Fuchsia
+        { bg: 'rgba(217, 119, 6, 0.15)', text: '#f59e0b' },   // Amber
+        { bg: 'rgba(147, 51, 234, 0.15)', text: '#a855f7' },  // Purple
+        { bg: 'rgba(8, 145, 178, 0.15)', text: '#06b6d4' }    // Cyan
+    ];
+    
+    // Simple string hash
+    let hash = 0;
+    for (let i = 0; i < partner.name.length; i++) {
+        hash = partner.name.charCodeAt(i) + ((hash << 5) - hash);
     }
+    const colorIndex = Math.abs(hash) % colors.length;
+    const color = colors[colorIndex];
 
-    const src = errorLevel === 0 
-        ? `https://logo.clearbit.com/${partner.domain}`
-        : `https://icon.horse/icon/${partner.domain}`;
+    const initials = partner.name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
 
     return (
-        <img 
-            src={src} 
-            alt={partner.name}
-            className={errorLevel === 0 ? styles.logo : `${styles.logo} ${styles.faviconLogo}`}
-            onError={() => setErrorLevel(prev => prev + 1)}
-        />
+        <div className={styles.cssFallback}>
+            <div className={styles.initialsBg} style={{ backgroundColor: color.bg, color: color.text }}>
+                {initials}
+            </div>
+            <span className={styles.fallbackText}>{partner.name}</span>
+        </div>
     );
 };
 
