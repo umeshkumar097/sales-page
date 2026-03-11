@@ -6,6 +6,16 @@ import CTAForm from "@/components/sections/CTAForm";
 import styles from "./page.module.css";
 import Link from "next/link";
 import CaseStudy from "@/components/sections/CaseStudy";
+import WebBenefits from "@/components/sections/WebBenefits";
+import WebServices from "@/components/sections/WebServices";
+import WebIndustries from "@/components/sections/WebIndustries";
+import WebFeatures from "@/components/sections/WebFeatures";
+import WebProcess from "@/components/sections/WebProcess";
+import WebPortfolio from "@/components/sections/WebPortfolio";
+import WebWhyUs from "@/components/sections/WebWhyUs";
+import WebTechStack from "@/components/sections/WebTechStack";
+import WebTestimonials from "@/components/sections/WebTestimonials";
+import WebFAQ from "@/components/sections/WebFAQ";
 
 export async function generateMetadata({ params }: { params: Promise<{ city: string }> }): Promise<Metadata> {
     const resolvedParams = await params;
@@ -46,18 +56,17 @@ export default async function WebDevPage({ params }: { params: Promise<{ city: s
                                     #1 Rated Web Development Partners
                                 </div>
                                 <h1>
-                                    Top Web Development Agency in <br />
+                                    Top-Tier Web Development Agency in <br />
                                     <span className="text-gradient">{capitalizedCity}</span>
                                 </h1>
                                 <p className="text-muted" style={{ fontSize: '1.2rem', marginBottom: '2rem' }}>
-                                    Stop losing customers to outdated website designs. We engineer ultra-fast, SEO-optimized, 
-                                    and high-converting websites that turn your {capitalizedCity} business into an industry leader.
+                                    Stop losing traffic to slow templates. We build blazing-fast, high-converting React and Next.js websites that dominate SEO and skyrocket business revenue.
                                 </p>
                                 <ul className={styles.benefits}>
-                                    <li>✓ Custom Next.js / React Development</li>
-                                    <li>✓ Blazing Fast Load Times</li>
-                                    <li>✓ Mobile-First Responsive Design</li>
-                                    <li>✓ Advanced Technical SEO Built-In</li>
+                                    <li>✓ Custom Next.js Architecture</li>
+                                    <li>✓ Headless E-Commerce & Shopify</li>
+                                    <li>✓ Bulletproof Technical SEO</li>
+                                    <li>✓ <span style={{color: '#10b981'}}>100/100</span> Core Web Vitals Guaranteed</li>
                                 </ul>
                                 <div style={{ marginTop: '2rem' }}>
                                     <Link href="#contact" className="btn btn-primary">
@@ -74,6 +83,16 @@ export default async function WebDevPage({ params }: { params: Promise<{ city: s
                 </section>
 
                 <CaseStudy />
+                <WebBenefits />
+                <WebServices />
+                <WebIndustries />
+                <WebFeatures />
+                <WebProcess />
+                <WebPortfolio />
+                <WebWhyUs />
+                <WebTechStack />
+                <WebTestimonials />
+                <WebFAQ />
 
             </main>
             <Footer />

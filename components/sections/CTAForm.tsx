@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import styles from "./CTAForm.module.css";
 
@@ -11,6 +11,7 @@ interface CTAFormProps {
 
 export default function CTAForm({ isHero = false }: CTAFormProps) {
     const router = useRouter();
+    const pathname = usePathname();
     const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -18,6 +19,16 @@ export default function CTAForm({ isHero = false }: CTAFormProps) {
         e.preventDefault();
         setFormStatus("submitting");
         setErrorMessage("");
+
+        // Determine Lead Type based on current URL path
+        let resolvedLeadType = "General";
+        if (pathname.includes("/web-development")) {
+            resolvedLeadType = "Web";
+        } else if (pathname.includes("/mobile-app-development")) {
+            resolvedLeadType = "Mobile";
+        } else if (pathname.includes("/zoom-reseller")) {
+            resolvedLeadType = "Zoom";
+        }
 
         const formData = new FormData(e.currentTarget);
         const data = {
@@ -27,6 +38,7 @@ export default function CTAForm({ isHero = false }: CTAFormProps) {
             phone: formData.get("phone"),
             projectType: formData.get("service"),
             message: formData.get("message"),
+            leadType: resolvedLeadType,
             consent: formData.get("consent") === "on",
         };
 

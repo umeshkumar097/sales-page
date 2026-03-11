@@ -26,7 +26,7 @@ function DashboardContent() {
     const [error, setError] = useState("");
     const [sendingInvite, setSendingInvite] = useState<number | null>(null);
     const [successMessage, setSuccessMessage] = useState("");
-    const [activeTab, setActiveTab] = useState<"General" | "Zoom">("General");
+    const [activeTab, setActiveTab] = useState<"General" | "Web" | "Mobile" | "Zoom">("General");
     
     // Modal State
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -199,20 +199,34 @@ function DashboardContent() {
                     </div>
                 </div>
 
-                <div style={{ display: "flex", gap: "1rem", marginBottom: "2rem" }}>
+                <div style={{ display: "flex", gap: "1rem", marginBottom: "2rem", flexWrap: "wrap" }}>
                     <button 
                         className={`btn ${activeTab === "General" ? "btn-primary" : "btn-secondary"}`}
                         onClick={() => setActiveTab("General")}
                         style={activeTab === "General" ? {} : { borderColor: "rgba(255,255,255,0.2)" }}
                     >
-                        General Service Leads ({leads.filter(l => l.leadType === "General").length})
+                        Main Leads ({leads.filter(l => l.leadType === "General").length})
+                    </button>
+                    <button 
+                        className={`btn ${activeTab === "Web" ? "btn-primary" : "btn-secondary"}`}
+                        onClick={() => setActiveTab("Web")}
+                        style={activeTab === "Web" ? { background: "linear-gradient(135deg, #10b981 0%, #059669 100%)", borderColor: "transparent" } : { borderColor: "rgba(255,255,255,0.2)" }}
+                    >
+                        Web Leads ({leads.filter(l => l.leadType === "Web").length})
+                    </button>
+                    <button 
+                        className={`btn ${activeTab === "Mobile" ? "btn-primary" : "btn-secondary"}`}
+                        onClick={() => setActiveTab("Mobile")}
+                        style={activeTab === "Mobile" ? { background: "linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)", borderColor: "transparent" } : { borderColor: "rgba(255,255,255,0.2)" }}
+                    >
+                        Mobile App Leads ({leads.filter(l => l.leadType === "Mobile").length})
                     </button>
                     <button 
                         className={`btn ${activeTab === "Zoom" ? "btn-primary" : "btn-secondary"}`}
                         onClick={() => setActiveTab("Zoom")}
                         style={activeTab === "Zoom" ? { background: "linear-gradient(135deg, #2D8CFF 0%, #0050E6 100%)", boxShadow: "0 4px 14px 0 rgba(45, 140, 255, 0.4)" } : { borderColor: "rgba(255,255,255,0.2)" }}
                     >
-                        Zoom Reseller Leads ({leads.filter(l => l.leadType === "Zoom").length})
+                        Zoom Leads ({leads.filter(l => l.leadType === "Zoom").length})
                     </button>
                 </div>
 
