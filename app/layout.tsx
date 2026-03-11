@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 import AOSInit from "@/components/ui/AOSInit";
 import "./globals.css";
 
@@ -85,6 +86,24 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.variable} ${outfit.variable}`}>
         <GoogleAnalytics gaId="G-XM6FSJ7G61" />
+        
+        {/* Google Ads Tracking */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=AW-11514904878`}
+        />
+        <Script
+          id="google-ads"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-11514904878');
+            `,
+          }}
+        />
 
         <AOSInit />
         {children}
