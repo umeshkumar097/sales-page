@@ -66,9 +66,8 @@ export default async function MobileAppDevPage({ params }: { params: Promise<{ c
                                 </div>
                             </div>
                             
-                            <div className={`glass ${styles.formWrapper}`}>
-                                <h3 style={{marginBottom: '1rem', textAlign: 'center'}}>Request App Development Quote</h3>
-                                <CTAForm isHero={false} />
+                            <div style={{ position: 'relative', zIndex: 2 }}>
+                                <CTAForm isHero={true} />
                             </div>
                         </div>
                     </div>

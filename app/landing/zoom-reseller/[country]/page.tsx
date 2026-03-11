@@ -68,8 +68,7 @@ export default async function ZoomResellerPage({ params }: { params: Promise<{ c
                                 </div>
                             </div>
                             
-                            <div className={`glass ${styles.formWrapper}`}>
-                                <h3 style={{marginBottom: '1rem', textAlign: 'center'}}>Inquire About Zoom Licenses</h3>
+                            <div style={{ position: 'relative', zIndex: 2 }}>
                                 <ZoomCTAForm isHero={true} />
                             </div>
                         </div>

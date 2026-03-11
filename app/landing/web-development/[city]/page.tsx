@@ -66,9 +66,8 @@ export default async function WebDevPage({ params }: { params: Promise<{ city: s
                                 </div>
                             </div>
                             
-                            <div className={`glass ${styles.formWrapper}`}>
-                                <h3 style={{marginBottom: '1rem', textAlign: 'center'}}>Get a Free Website Audit</h3>
-                                <CTAForm isHero={false} />
+                            <div style={{ position: 'relative', zIndex: 2 }}>
+                                <CTAForm isHero={true} />
                             </div>
                         </div>
                     </div>

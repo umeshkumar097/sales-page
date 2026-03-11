@@ -263,7 +263,7 @@
     max-width: 650px;
     margin: 0 auto;
     text-align: left;
-    padding: 2.5rem !important;
+    padding: 2.5rem;
 }
 
 .heroFormBox .form h3 {
@@ -299,6 +299,6 @@
 
 @media (max-width: 640px) {
     .formBox {
-        padding: 2rem 1.5rem;
+        padding: 2rem 1.5rem !important;
     }
 }
