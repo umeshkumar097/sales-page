@@ -90,14 +90,14 @@ export default function RootLayout({
       <body className={`${inter.variable} ${outfit.variable}`}>
         <GoogleAnalytics gaId="G-XM6FSJ7G61" />
         
-        {/* Google Ads Tracking */}
+        {/* Google Ads Tracking - Deferred to improve LCP/FCP */}
         <Script
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           src={`https://www.googletagmanager.com/gtag/js?id=AW-11514904878`}
         />
         <Script
           id="google-ads"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];

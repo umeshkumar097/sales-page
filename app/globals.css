@@ -174,5 +174,5 @@ h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
+  animation: fadeIn 0.8s ease-out both;
 }

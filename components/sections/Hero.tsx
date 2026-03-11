@@ -10,17 +10,17 @@ export default function Hero() {
                 <div className={styles.heroGrid}>
                     {/* Left: Main Content */}
                     <div className={styles.content}>
-                        <div className={styles.badge} data-aos="fade-down" data-aos-delay="100">
+                        <div className={`${styles.badge} animate-fade-in`}>
                             <span className={styles.pulse}></span>
                             8+ Years of Experience in IT & Development
                         </div>
 
-                        <h1 className="animate-fade-in" data-aos="fade-up" data-aos-delay="200">
+                        <h1 className="animate-fade-in" style={{ animationDelay: '100ms' }}>
                             Scaling Businesses With High-Performance <br />
                             <span className="text-gradient">Digital & AI Solutions</span>
                         </h1>
 
-                        <p className={`text-muted ${styles.subtitle} animate-fade-in`} data-aos="fade-up" data-aos-delay="300">
+                        <p className={`text-muted ${styles.subtitle} animate-fade-in`} style={{ animationDelay: '200ms' }}>
                             We build custom websites, scalable mobile apps, and intelligent automation systems
                             designed to maximize your ROI and dominate your market.
                         </p>
@@ -32,7 +32,7 @@ export default function Hero() {
                             <li>✓ AI-Automation Ready</li>
                         </ul>
 
-                        <div className={styles.ctaGroup} data-aos="fade-up" data-aos-delay="500">
+                        <div className={`${styles.ctaGroup} animate-fade-in`} style={{ animationDelay: '300ms' }}>
                             <Link href="#contact" className="btn btn-primary">
                                 Get Free Consultation
                             </Link>
@@ -43,13 +43,13 @@ export default function Hero() {
                     </div>
 
                     {/* Right: Hero Form */}
-                    <div className={styles.heroFormWrapper} data-aos="fade-left" data-aos-delay="400">
+                    <div className={`${styles.heroFormWrapper} animate-fade-in`} style={{ animationDelay: '400ms' }}>
                         <CTAForm isHero={true} />
                     </div>
                 </div>
 
                 {/* Trust Indicators Bar */}
-                <div className={`glass ${styles.trustBar}`} data-aos="fade-up" data-aos-delay="600">
+                <div className={`glass ${styles.trustBar} animate-fade-in`} style={{ animationDelay: '500ms' }}>
                     <div className={styles.stat}>
                         <h3>8+</h3>
                         <p>Years Experience</p>
