@@ -2,16 +2,16 @@ import styles from "./Clients.module.css";
 
 export default function Clients() {
     const clientsList = [
-        "Shoolini University",
-        "Aditech ICT Pvt. Ltd.",
-        "Total Solutions",
-        "CRUX Management Services (P) Ltd.",
-        "SANNAM S4 GROUP",
-        "Clever Personal Branding",
-        "Plum insight",
-        "infedis INFOTECH",
-        "RC CONSULTANCY",
-        "PSM"
+        { name: "Shoolini University", domain: "shooliniuniversity.com" },
+        { name: "Aditech ICT Pvt. Ltd.", domain: "aditech.in" },
+        { name: "Total Solutions", domain: "totalsolutions.in" },
+        { name: "CRUX Management Services (P) Ltd.", domain: "cruxmanagement.com" },
+        { name: "Sannam S4 Group", domain: "sannams4.com" },
+        { name: "Clever Personal Branding", domain: "clever.in" },
+        { name: "Plum Insight", domain: "pluminsight.com" },
+        { name: "infedis INFOTECH", domain: "infedis.com" },
+        { name: "RC Consultancy", domain: "rcconsultancy.in" },
+        { name: "PSM", domain: "psm.com" }
     ];
 
     return (
@@ -28,7 +28,15 @@ export default function Clients() {
                 <div className={styles.grid}>
                     {clientsList.map((client, index) => (
                         <div key={index} className={`glass ${styles.card}`} data-aos="fade-up" data-aos-delay={index * 50}>
-                            <h3>{client}</h3>
+                            <img 
+                                src={`https://logo.clearbit.com/${client.domain}`} 
+                                alt={client.name}
+                                className={styles.logo}
+                                onError={(e) => {
+                                    e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(client.name)}&background=ffffff&color=2563eb&bold=true`;
+                                    e.currentTarget.className = `${styles.logo} ${styles.fallbackLogo}`;
+                                }}
+                            />
                         </div>
                     ))}
                 </div>

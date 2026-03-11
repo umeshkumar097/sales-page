@@ -2,17 +2,17 @@ import styles from "./Partners.module.css";
 
 export default function Partners() {
     const partnersList = [
-        "Meta Tech Provider",
-        "Google Ads CERTIFIED",
-        "LinkedIn Advertising",
-        "Amazon Ads Verified partner",
-        "TikTok Ads",
-        "Adobe CERTIFIED RESELLER",
-        "Twitter Advertising",
-        "Zoom Authorized Reseller",
-        "Google Cloud",
-        "Microsoft",
-        "AWS"
+        { name: "Meta", domain: "meta.com" },
+        { name: "Google Ads", domain: "google.com" },
+        { name: "LinkedIn", domain: "linkedin.com" },
+        { name: "Amazon Ads", domain: "amazon.com" },
+        { name: "TikTok Ads", domain: "tiktok.com" },
+        { name: "Adobe", domain: "adobe.com" },
+        { name: "Twitter", domain: "twitter.com" },
+        { name: "Zoom", domain: "zoom.us" },
+        { name: "Google Cloud", domain: "cloud.google.com" },
+        { name: "Microsoft", domain: "microsoft.com" },
+        { name: "AWS", domain: "aws.amazon.com" }
     ];
 
     return (
@@ -29,7 +29,15 @@ export default function Partners() {
                 <div className={styles.grid}>
                     {partnersList.map((partner, index) => (
                         <div key={index} className={`glass ${styles.card}`} data-aos="fade-up" data-aos-delay={index * 50}>
-                            <h3>{partner}</h3>
+                            <img 
+                                src={`https://logo.clearbit.com/${partner.domain}`} 
+                                alt={partner.name}
+                                className={styles.logo}
+                                onError={(e) => {
+                                    e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(partner.name)}&background=ffffff&color=2563eb&bold=true`;
+                                    e.currentTarget.className = `${styles.logo} ${styles.fallbackLogo}`;
+                                }}
+                            />
                         </div>
                     ))}
                 </div>
