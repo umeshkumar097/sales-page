@@ -122,10 +122,44 @@ export async function POST(request: Request) {
       `,
         };
 
-        // Wrap email sending in a promise so we don't block the UI if SMTP is slow
+        // 3. Send WhatsApp Admin Notification
+        const sendWhatsApp = async () => {
+            const WHATSAPP_PHONE_ID = process.env.WHATSAPP_PHONE_ID;
+            const WHATSAPP_ACCESS_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN;
+            const ADMIN_WHATSAPP_NUMBER = process.env.ADMIN_WHATSAPP_NUMBER || "919871881183";
+            
+            if (!WHATSAPP_PHONE_ID || !WHATSAPP_ACCESS_TOKEN) return;
+            
+            try {
+                const whatsappMessage = `*New Lead Captured (${leadType || "General"})* 🚀\n\n*Name:* ${name}\n*Company:* ${company || "N/A"}\n*Email:* ${email}\n*Phone:* ${phone}\n*Service:* ${projectType}\n*Message:* ${message || "N/A"}`;
+                
+                await fetch(`https://graph.facebook.com/v17.0/${WHATSAPP_PHONE_ID}/messages`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${WHATSAPP_ACCESS_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        messaging_product: "whatsapp",
+                        recipient_type: "individual",
+                        to: ADMIN_WHATSAPP_NUMBER,
+                        type: "text",
+                        text: {
+                            preview_url: false,
+                            body: whatsappMessage
+                        }
+                    })
+                });
+            } catch (err) {
+                console.error("WhatsApp Request Error:", err);
+            }
+        };
+
+        // Wrap email and whatsapp sending in a promise so we don't block the UI if API is slow
         Promise.all([
             transporter.sendMail(mailOptions).catch(err => console.error("Auto-responder error:", err)),
-            transporter.sendMail(adminMailOptions).catch(err => console.error("Admin notification error:", err))
+            transporter.sendMail(adminMailOptions).catch(err => console.error("Admin notification error:", err)),
+            sendWhatsApp()
         ]);
 
         return NextResponse.json({ success: true, leadId: lead.id }, { status: 201 });
