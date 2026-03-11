@@ -1,10 +1,10 @@
-<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Solid Background for visibility (Optional, but looks premium) -->
-  <rect width="512" height="512" rx="100" fill="#050511"/>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark Circular Background -->
+  <circle cx="256" cy="256" r="256" fill="#080B1A"/>
   
-  <!-- Left Leg (Orange Pointer) -->
-  <path d="M256 100 L160 380 L220 380 L280 200 Z" fill="#f59e0b"/>
+  <!-- Orange Peak (Left Leg) -->
+  <path d="M256 50 L100 340 L180 340 L310 130 Z" fill="#F9893E"/>
   
-  <!-- Right Leg and Crossbar (Blue Arc) -->
-  <path d="M220 280 Q320 260 360 380 L300 380 Q280 320 180 320 Z" fill="#3b82f6"/>
+  <!-- Blue Swoosh (Crossbar & Right Leg) -->
+  <path d="M85 410 C 150 240, 300 220, 480 245 L 350 415 C 270 300, 200 310, 150 410 Z" fill="#5A7DFF"/>
 </svg>
