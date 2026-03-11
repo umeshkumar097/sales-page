@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./Header.module.css";
@@ -8,6 +9,10 @@ import styles from "./Header.module.css";
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const pathname = usePathname();
+
+    const isHome = pathname === "/";
+    const linkPrefix = isHome ? "" : "/";
 
     useEffect(() => {
         const handleScroll = () => {
@@ -34,10 +39,10 @@ export default function Header() {
 
                 {/* Desktop Nav */}
                 <nav className={styles.desktopNav}>
-                    <Link href="#services">Services</Link>
-                    <Link href="#process">Process</Link>
-                    <Link href="#results">Results</Link>
-                    <Link href="#faq">FAQ</Link>
+                    <Link href={`${linkPrefix}#services`}>Services</Link>
+                    <Link href={`${linkPrefix}#process`}>Process</Link>
+                    <Link href={`${linkPrefix}#results`}>Results</Link>
+                    <Link href={`${linkPrefix}#faq`}>FAQ</Link>
                 </nav>
 
                 <div className={styles.actions}>
@@ -59,10 +64,10 @@ export default function Header() {
             {/* Mobile Nav */}
             <div className={`${styles.mobileNav} ${mobileMenuOpen ? styles.open : ""}`}>
                 <nav>
-                    <Link href="#services" onClick={() => setMobileMenuOpen(false)}>Services</Link>
-                    <Link href="#process" onClick={() => setMobileMenuOpen(false)}>Process</Link>
-                    <Link href="#results" onClick={() => setMobileMenuOpen(false)}>Results</Link>
-                    <Link href="#faq" onClick={() => setMobileMenuOpen(false)}>FAQ</Link>
+                    <Link href={`${linkPrefix}#services`} onClick={() => setMobileMenuOpen(false)}>Services</Link>
+                    <Link href={`${linkPrefix}#process`} onClick={() => setMobileMenuOpen(false)}>Process</Link>
+                    <Link href={`${linkPrefix}#results`} onClick={() => setMobileMenuOpen(false)}>Results</Link>
+                    <Link href={`${linkPrefix}#faq`} onClick={() => setMobileMenuOpen(false)}>FAQ</Link>
                     <Link href="#contact" className="btn btn-primary" onClick={() => setMobileMenuOpen(false)}>
                         Get Free Consultation
                     </Link>

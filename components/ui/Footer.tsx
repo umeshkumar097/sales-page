@@ -1,8 +1,15 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
+    const pathname = usePathname();
+    const isHome = pathname === "/";
+    const linkPrefix = isHome ? "" : "/";
+
     return (
         <footer className={styles.footer}>
             <div className="container">
@@ -31,11 +38,11 @@ export default function Footer() {
                     <div className={styles.linksCol}>
                         <h4>Services</h4>
                         <ul>
-                            <li><Link href="#services">Website Development</Link></li>
-                            <li><Link href="#services">Android App Development</Link></li>
-                            <li><Link href="#services">iOS App Development</Link></li>
-                            <li><Link href="#services">Custom Web Apps</Link></li>
-                            <li><Link href="#services">AI Automation</Link></li>
+                            <li><Link href={`${linkPrefix}#services`}>Website Development</Link></li>
+                            <li><Link href={`${linkPrefix}#services`}>Android App Development</Link></li>
+                            <li><Link href={`${linkPrefix}#services`}>iOS App Development</Link></li>
+                            <li><Link href={`${linkPrefix}#services`}>Custom Web Apps</Link></li>
+                            <li><Link href={`${linkPrefix}#services`}>AI Automation</Link></li>
                         </ul>
                     </div>
 
@@ -43,11 +50,11 @@ export default function Footer() {
                     <div className={styles.linksCol}>
                         <h4>Company</h4>
                         <ul>
-                            <li><Link href="#about">About Us</Link></li>
-                            <li><Link href="#case-studies">Case Studies</Link></li>
-                            <li><Link href="#process">Our Process</Link></li>
-                            <li><Link href="#faq">FAQ</Link></li>
-                            <li><Link href="#contact">Contact</Link></li>
+                            <li><Link href={`${linkPrefix}#about`}>About Us</Link></li>
+                            <li><Link href={`${linkPrefix}#case-studies`}>Case Studies</Link></li>
+                            <li><Link href={`${linkPrefix}#process`}>Our Process</Link></li>
+                            <li><Link href={`${linkPrefix}#faq`}>FAQ</Link></li>
+                            <li><Link href={`${linkPrefix}#contact`}>Contact</Link></li>
                         </ul>
                     </div>
 
@@ -55,7 +62,7 @@ export default function Footer() {
                     <div className={styles.contactCol}>
                         <h4>Ready to Scale?</h4>
                         <p className="text-muted">Get a custom proposal within 24 hours.</p>
-                        <Link href="#contact" className="btn btn-primary" style={{ marginTop: '1rem', width: '100%' }}>
+                        <Link href={`${linkPrefix}#contact`} className="btn btn-primary" style={{ marginTop: '1rem', width: '100%' }}>
                             Get Free Consultation
                         </Link>
                     </div>
