@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./Partners.module.css";
 
 export default function Partners() {

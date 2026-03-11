@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./Clients.module.css";
 
 export default function Clients() {
