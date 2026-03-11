@@ -9,6 +9,8 @@ import Solution from "@/components/sections/Solution";
 import Services from "@/components/sections/Services";
 import WhyChoose from "@/components/sections/WhyChoose";
 import CaseStudy from "@/components/sections/CaseStudy";
+import Clients from "@/components/sections/Clients";
+import Partners from "@/components/sections/Partners";
 import Process from "@/components/sections/Process";
 import Testimonials from "@/components/sections/Testimonials";
 import FAQ from "@/components/sections/FAQ";
@@ -25,6 +27,8 @@ export default function Home() {
         <Services />
         <WhyChoose />
         <CaseStudy />
+        <Clients />
+        <Partners />
         <Process />
         <Testimonials />
         <FAQ />
