@@ -48,13 +48,13 @@ export async function GET(request: Request) {
     // Return to the dashboard with a success flag
     return NextResponse.redirect(new URL(`${baseUrl}/admin/dashboard?success=GoogleAuthComplete`));
     
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error exchanging Google Auth code:", error);
     
     const host = request.headers.get("host") || "localhost:3000";
     const protocol = host.includes("localhost") ? "http" : "https";
     const baseUrl = `${protocol}://${host}`;
     
-    return NextResponse.redirect(new URL(`${baseUrl}/admin/dashboard?error=GoogleServerAuthFailed`));
+    return NextResponse.redirect(new URL(`${baseUrl}/admin/dashboard?error=GoogleServerAuthFailed&details=${encodeURIComponent(error.message || "Unknown error")}`));
   }
 }

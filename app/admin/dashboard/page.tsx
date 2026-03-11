@@ -45,7 +45,8 @@ function DashboardContent() {
             setSuccessMessage("Google Calendar successfully connected!");
             router.replace("/admin/dashboard"); // Clean URL
         } else if (authError) {
-            setError("Failed to connect Google Calendar. Please try again.");
+            const details = searchParams.get("details");
+            setError(`Failed to connect Google Calendar. Details: ${details ? decodeURIComponent(details) : "Please try again."}`);
             router.replace("/admin/dashboard");
         }
     }, [searchParams, router]);
