@@ -51,6 +51,13 @@ export default function CTAForm({ isHero = false }: CTAFormProps) {
 
             if (!res.ok) throw new Error("Failed to submit request.");
 
+            // Google Ads Conversion Tracking
+            if (typeof window !== 'undefined' && typeof (window as any).gtag !== 'undefined') {
+                (window as any).gtag('event', 'conversion', {
+                    'send_to': 'AW-11514904878/FGD0CIyNyLwaEK6C3vIq'
+                });
+            }
+
             setFormStatus("success");
             router.push("/thank-you"); // Redirect to thank you page
         } catch (error) {
