@@ -1,0 +1,75 @@
+.comparisonSection {
+    background-color: var(--bg-secondary);
+}
+
+.headerCentered {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+}
+
+.tableWrapper {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    max-width: 1000px;
+    margin: 0 auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.table th, .table td {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.table th {
+    background-color: rgba(0, 0, 0, 0.2);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.table td {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.table td strong {
+    color: var(--text-primary);
+}
+
+.competitorCol {
+    color: #fca5a5 !important;
+}
+
+.aiclexCol {
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.highlight {
+    color: var(--success);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.highlight::before {
+    content: "✓";
+    display: inline-block;
+}
+
+@media (max-width: 768px) {
+    .tableWrapper {
+        overflow-x: auto;
+    }
+    
+    .table th, .table td {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+}

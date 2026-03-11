@@ -6,6 +6,13 @@ import ZoomCTAForm from "@/components/sections/ZoomCTAForm";
 import styles from "./page.module.css";
 import Link from "next/link";
 import Clients from "@/components/sections/Clients";
+import ZoomPlans from "@/components/sections/ZoomPlans";
+import ZoomFeatures from "@/components/sections/ZoomFeatures";
+import ZoomWhyUs from "@/components/sections/ZoomWhyUs";
+import ZoomComparison from "@/components/sections/ZoomComparison";
+import ZoomUseCases from "@/components/sections/ZoomUseCases";
+import ZoomHowItWorks from "@/components/sections/ZoomHowItWorks";
+import ZoomFAQ from "@/components/sections/ZoomFAQ";
 
 // Dynamic metadata generation for SEO
 export async function generateMetadata({ params }: { params: Promise<{ country: string }> }): Promise<Metadata> {
@@ -75,36 +82,14 @@ export default async function ZoomResellerPage({ params }: { params: Promise<{ c
                     </div>
                 </section>
 
-                {/* Why Choose Us */}
-                <section className="section" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-                    <div className="container">
-                        <div className={styles.headerCentered}>
-                            <div className={styles.tag}>Why Us?</div>
-                            <h2>Why Buy Zoom in {capitalizedCountry} Through <span className="text-gradient">Aiclex?</span></h2>
-                            <p className="text-muted">Avoid credit card international fees and generic support queues.</p>
-                        </div>
-                        
-                        <div className={styles.grid}>
-                            <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-md)' }}>
-                                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>💰</div>
-                                <h3>Save on Taxes & Fees</h3>
-                                <p className="text-muted">We provide proper local tax invoices so you can claim input credits easily, avoiding hefty forex markup fees from remote credit card transactions.</p>
-                            </div>
-                            <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-md)' }}>
-                                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>📞</div>
-                                <h3>Priority Local Support</h3>
-                                <p className="text-muted">Skip the automated bots. Get a direct point of contact for onboarding, troubleshooting, and license management across your entire organization.</p>
-                            </div>
-                            <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-md)' }}>
-                                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>⚙️</div>
-                                <h3>API & Integrations</h3>
-                                <p className="text-muted">As a full-stack digital agency, we can integrate Zoom APIs directly into your LMS, CRM, or custom application for seamless workflows.</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
                 <Clients />
+                <ZoomFeatures />
+                <ZoomWhyUs country={country} />
+                <ZoomPlans />
+                <ZoomComparison />
+                <ZoomUseCases />
+                <ZoomHowItWorks />
+                <ZoomFAQ />
 
             </main>
             <Footer />
