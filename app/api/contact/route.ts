@@ -11,6 +11,33 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
         }
 
+        // --- SPAM PROTECTION & VALIDATION ---
+        const spamPattern = /(http|https|www\.|<a href|\[url|\[link|<script|import java|public class|extends AppCompatActivity)/i;
+        const codeCharPattern = /[{}[\]<>;]/g;
+        
+        // 1. Check if message contains known spam patterns (URLs, HTML tags, common bot payloads)
+        if (message && spamPattern.test(message)) {
+             console.warn(`Spam blocked (Pattern Match) from ${email}`);
+             return NextResponse.json({ error: "Invalid content detected. Please remove any links or code snippets." }, { status: 400 });
+        }
+
+        // 2. Check if the message contains an unusually high amount of code characters ({, }, <, >, ;, [, ])
+        if (message) {
+            const codeCharMatches = message.match(codeCharPattern);
+            // If more than 5 code-like characters are found, it's likely a script/code injection payload
+            if (codeCharMatches && codeCharMatches.length > 5) {
+                console.warn(`Spam blocked (Code Injection) from ${email}`);
+                return NextResponse.json({ error: "Invalid formatting detected. Please write a normal text message." }, { status: 400 });
+            }
+        }
+        
+        // 3. Prevent names from having URLs/Code
+        if (spamPattern.test(name)) {
+            console.warn(`Spam blocked (Invalid Name) from ${email}`);
+             return NextResponse.json({ error: "Invalid name format." }, { status: 400 });
+        }
+        // --- END SPAM PROTECTION ---
+
         // 1. Save to Database
         const lead = await prisma.lead.create({
             data: {
