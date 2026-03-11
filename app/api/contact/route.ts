@@ -123,7 +123,7 @@ export async function POST(request: Request) {
         };
 
         // 3. Send WhatsApp Admin Notification
-        const sendWhatsApp = async () => {
+        const sendWhatsAppAdmin = async () => {
             const WHATSAPP_PHONE_ID = process.env.WHATSAPP_PHONE_ID;
             const WHATSAPP_ACCESS_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN;
             const ADMIN_WHATSAPP_NUMBER = process.env.ADMIN_WHATSAPP_NUMBER || "919871881183";
@@ -151,7 +151,51 @@ export async function POST(request: Request) {
                     })
                 });
             } catch (err) {
-                console.error("WhatsApp Request Error:", err);
+                console.error("WhatsApp Admin Request Error:", err);
+            }
+        };
+
+        // 4. Send WhatsApp Client Auto-Responder (Template Message)
+        const sendWhatsAppClient = async () => {
+            const WHATSAPP_PHONE_ID = process.env.WHATSAPP_PHONE_ID;
+            const WHATSAPP_ACCESS_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN;
+            
+            if (!WHATSAPP_PHONE_ID || !WHATSAPP_ACCESS_TOKEN || !phone) return;
+            
+            try {
+                // Clean the phone number (remove +, spaces, brackets, dashes)
+                const cleanPhone = phone.replace(/\D/g, ''); 
+                
+                await fetch(`https://graph.facebook.com/v17.0/${WHATSAPP_PHONE_ID}/messages`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${WHATSAPP_ACCESS_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        messaging_product: "whatsapp",
+                        recipient_type: "individual",
+                        to: cleanPhone,
+                        type: "template",
+                        template: {
+                            name: "client_welcome_message", // You must create this template in Meta Business Manager
+                            language: {
+                                code: "en" // Adjust based on your Meta Template language (e.g., 'en' or 'en_US')
+                            },
+                            components: [
+                                {
+                                    type: "body",
+                                    parameters: [
+                                        { type: "text", text: name }, // {{1}} - Client Name
+                                        { type: "text", text: projectType } // {{2}} - Project/Service Type
+                                    ]
+                                }
+                            ]
+                        }
+                    })
+                });
+            } catch (err) {
+                console.error("WhatsApp Client Request Error:", err);
             }
         };
 
@@ -159,7 +203,8 @@ export async function POST(request: Request) {
         Promise.all([
             transporter.sendMail(mailOptions).catch(err => console.error("Auto-responder error:", err)),
             transporter.sendMail(adminMailOptions).catch(err => console.error("Admin notification error:", err)),
-            sendWhatsApp()
+            sendWhatsAppAdmin(),
+            sendWhatsAppClient()
         ]);
 
         return NextResponse.json({ success: true, leadId: lead.id }, { status: 201 });
