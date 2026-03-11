@@ -7,6 +7,7 @@ import Link from "next/link";
 
 interface Lead {
     id: number;
+    leadType: string;
     name: string;
     company: string | null;
     email: string;
@@ -25,6 +26,7 @@ function DashboardContent() {
     const [error, setError] = useState("");
     const [sendingInvite, setSendingInvite] = useState<number | null>(null);
     const [successMessage, setSuccessMessage] = useState("");
+    const [activeTab, setActiveTab] = useState<"General" | "Zoom">("General");
     
     // Modal State
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -118,6 +120,8 @@ function DashboardContent() {
 
     if (loading) return <div className={styles.loading}>Loading Dashboard...</div>;
 
+    const filteredLeads = leads.filter(lead => lead.leadType === activeTab);
+
     return (
         <div className={styles.dashboardContainer}>
             {/* Modal Overlay */}
@@ -195,6 +199,23 @@ function DashboardContent() {
                     </div>
                 </div>
 
+                <div style={{ display: "flex", gap: "1rem", marginBottom: "2rem" }}>
+                    <button 
+                        className={`btn ${activeTab === "General" ? "btn-primary" : "btn-secondary"}`}
+                        onClick={() => setActiveTab("General")}
+                        style={activeTab === "General" ? {} : { borderColor: "rgba(255,255,255,0.2)" }}
+                    >
+                        General Service Leads ({leads.filter(l => l.leadType === "General").length})
+                    </button>
+                    <button 
+                        className={`btn ${activeTab === "Zoom" ? "btn-primary" : "btn-secondary"}`}
+                        onClick={() => setActiveTab("Zoom")}
+                        style={activeTab === "Zoom" ? { background: "linear-gradient(135deg, #2D8CFF 0%, #0050E6 100%)", boxShadow: "0 4px 14px 0 rgba(45, 140, 255, 0.4)" } : { borderColor: "rgba(255,255,255,0.2)" }}
+                    >
+                        Zoom Reseller Leads ({leads.filter(l => l.leadType === "Zoom").length})
+                    </button>
+                </div>
+
                 {error && <div className={styles.error}>{error}</div>}
                 {successMessage && <div className={styles.success} style={{background: 'rgba(34, 197, 94, 0.1)', border: '1px solid rgba(34, 197, 94, 0.3)', color: '#86efac', padding: '1rem', borderRadius: 'var(--radius-sm)', marginBottom: '2rem'}}>{successMessage}</div>}
 
@@ -222,7 +243,7 @@ function DashboardContent() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {leads.map((lead) => (
+                                    {filteredLeads.map((lead) => (
                                         <tr key={lead.id}>
                                             <td className={styles.dateCell}>
                                                 {new Date(lead.createdAt).toLocaleDateString()}
@@ -241,7 +262,9 @@ function DashboardContent() {
                                                 <a href={`tel:${lead.phone}`} className={styles.link}>{lead.phone}</a>
                                             </td>
                                             <td>
-                                                <span className={styles.serviceTag}>{lead.projectType}</span>
+                                                <span className={styles.serviceTag} style={lead.leadType === 'Zoom' ? { background: 'rgba(45, 140, 255, 0.15)', color: '#60A5FA', border: '1px solid rgba(45, 140, 255, 0.3)' } : {}}>
+                                                    {lead.projectType}
+                                                </span>
                                             </td>
                                             <td className={styles.messageCell}>
                                                 {lead.message ? lead.message : <span className="text-muted">No message provided.</span>}

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
-import CTAForm from "@/components/sections/CTAForm";
+import ZoomCTAForm from "@/components/sections/ZoomCTAForm";
 import styles from "./page.module.css";
 import Link from "next/link";
 import Clients from "@/components/sections/Clients";
@@ -70,7 +70,7 @@ export default async function ZoomResellerPage({ params }: { params: Promise<{ c
                             
                             <div className={`glass ${styles.formWrapper}`}>
                                 <h3 style={{marginBottom: '1rem', textAlign: 'center'}}>Inquire About Zoom Licenses</h3>
-                                <CTAForm isHero={false} />
+                                <ZoomCTAForm isHero={true} />
                             </div>
                         </div>
                     </div>

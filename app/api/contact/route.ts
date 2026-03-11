@@ -5,7 +5,7 @@ import nodemailer from "nodemailer";
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { name, company, email, phone, projectType, message } = body;
+        const { leadType, name, company, email, phone, projectType, message } = body;
 
         if (!name || !email || !phone || !projectType) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -14,6 +14,7 @@ export async function POST(request: Request) {
         // 1. Save to Database
         const lead = await prisma.lead.create({
             data: {
+                leadType: leadType || "General",
                 name,
                 company: company || null,
                 email,
@@ -109,9 +110,9 @@ export async function POST(request: Request) {
         const adminMailOptions = {
             from: `"Aiclex System" <${process.env.SMTP_FROM || "info@aiclex.in"}>`,
             to: process.env.ADMIN_EMAIL || "info@aiclex.in",
-            subject: `New Lead from Ads: ${projectType} from ${name}`,
+            subject: `New Lead [${leadType || "General"}]: ${projectType} from ${name}`,
             html: `
-        <h3>New Lead Captured</h3>
+        <h3>New Lead Captured (${leadType || "General"})</h3>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Company:</strong> ${company || "N/A"}</p>
         <p><strong>Email:</strong> ${email}</p>

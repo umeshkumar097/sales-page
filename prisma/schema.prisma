@@ -9,6 +9,7 @@ datasource db {
 
 model Lead {
   id          Int      @id @default(autoincrement())
+  leadType    String   @default("General") // Allows distinguishing "Zoom", "Web", "Mobile" etc
   name        String
   company     String?
   email       String
