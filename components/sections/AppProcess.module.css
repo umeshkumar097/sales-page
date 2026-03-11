@@ -1,0 +1,134 @@
+.processSection {
+    background-color: var(--bg-secondary);
+    position: relative;
+    overflow: hidden;
+}
+
+.headerCentered {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+}
+
+.tag {
+    display: inline-block;
+    color: var(--accent-primary);
+    background: rgba(59, 130, 246, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* The vertical dashed line */
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 40px;
+    width: 2px;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(59, 130, 246, 0.5),
+        rgba(59, 130, 246, 0.5) 10px,
+        transparent 10px,
+        transparent 20px
+    );
+}
+
+.timelineItem {
+    display: flex;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.timelineItem:last-child {
+    margin-bottom: 0;
+}
+
+.timelineMarker {
+    width: 80px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    padding-top: 1.5rem;
+}
+
+.markerDot {
+    width: 24px;
+    height: 24px;
+    background: var(--bg-secondary);
+    border: 4px solid var(--accent-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
+.contentBox {
+    padding: 2.5rem;
+    border-radius: var(--radius-lg);
+    flex-grow: 1;
+    position: relative;
+}
+
+.stepNum {
+    position: absolute;
+    top: -20px;
+    right: 30px;
+    font-size: 4rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.05);
+    z-index: 0;
+}
+
+.contentBox h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.contentBox p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 20px;
+    }
+    
+    .timelineMarker {
+        width: 40px;
+    }
+    
+    .markerDot {
+        width: 16px;
+        height: 16px;
+        border-width: 3px;
+    }
+    
+    .contentBox {
+        padding: 1.5rem;
+    }
+    
+    .stepNum {
+        font-size: 3rem;
+        right: 15px;
+        top: 10px;
+    }
+}

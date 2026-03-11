@@ -6,6 +6,16 @@ import CTAForm from "@/components/sections/CTAForm";
 import styles from "./page.module.css";
 import Link from "next/link";
 import CaseStudy from "@/components/sections/CaseStudy";
+import AppBenefits from "@/components/sections/AppBenefits";
+import AppServices from "@/components/sections/AppServices";
+import AppIndustries from "@/components/sections/AppIndustries";
+import AppFeatures from "@/components/sections/AppFeatures";
+import AppProcess from "@/components/sections/AppProcess";
+import AppPortfolio from "@/components/sections/AppPortfolio";
+import AppWhyUs from "@/components/sections/AppWhyUs";
+import AppTechStack from "@/components/sections/AppTechStack";
+import AppTestimonials from "@/components/sections/AppTestimonials";
+import AppFAQ from "@/components/sections/AppFAQ";
 
 export async function generateMetadata({ params }: { params: Promise<{ city: string }> }): Promise<Metadata> {
     const resolvedParams = await params;
@@ -74,6 +84,16 @@ export default async function MobileAppDevPage({ params }: { params: Promise<{ c
                 </section>
 
                 <CaseStudy />
+                <AppBenefits />
+                <AppServices />
+                <AppIndustries />
+                <AppFeatures />
+                <AppProcess />
+                <AppPortfolio />
+                <AppWhyUs />
+                <AppTechStack />
+                <AppTestimonials />
+                <AppFAQ />
 
             </main>
             <Footer />
