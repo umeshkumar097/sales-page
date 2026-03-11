@@ -11,7 +11,6 @@ interface Lead {
     company: string | null;
     email: string;
     phone: string;
-    phone: string;
     projectType: string;
     message: string | null;
     createdAt: string;
