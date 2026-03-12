@@ -58,6 +58,11 @@ export default function CTAForm({ isHero = false }: CTAFormProps) {
                 });
             }
 
+            // Meta Pixel Lead Tracking
+            if (typeof window !== 'undefined' && typeof (window as any).fbq !== 'undefined') {
+                (window as any).fbq('track', 'Lead');
+            }
+
             setFormStatus("success");
             router.push("/thank-you"); // Redirect to thank you page
         } catch (error) {
