@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
+import { Suspense } from "react";
+import UTMTracker from "@/components/ui/UTMTracker";
 import AOSInit from "@/components/ui/AOSInit";
 import "./globals.css";
 
@@ -134,6 +136,9 @@ export default function RootLayout({
         </noscript>
         {/* End Meta Pixel Code */}
 
+        <Suspense fallback={null}>
+          <UTMTracker />
+        </Suspense>
         <AOSInit />
         {children}
       </body>

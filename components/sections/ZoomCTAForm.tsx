@@ -20,6 +20,12 @@ export default function ZoomCTAForm({ isHero = false }: ZoomCTAFormProps) {
         setErrorMessage("");
 
         const formData = new FormData(e.currentTarget);
+        
+        let leadSource = "Website Organic";
+        if (typeof window !== "undefined") {
+            leadSource = localStorage.getItem("aiclex_lead_source") || "Website Organic";
+        }
+
         const data = {
             leadType: "Zoom", // Hardcode the lead type for the backend
             name: formData.get("name"),
@@ -27,7 +33,9 @@ export default function ZoomCTAForm({ isHero = false }: ZoomCTAFormProps) {
             email: formData.get("email"),
             phone: formData.get("phone"),
             projectType: formData.get("licenseQuantity") + " Zoom Licenses", // Use projectType field to store license count for now to avoid DB changes, or we can just send it
+            budget: formData.get("budget"),
             message: formData.get("message"),
+            source: leadSource,
             consent: formData.get("consent") === "on",
         };
 
@@ -110,6 +118,18 @@ export default function ZoomCTAForm({ isHero = false }: ZoomCTAFormProps) {
                             <option value="50-99">50 to 99 Licenses</option>
                             <option value="100+">100+ Licenses (Enterprise)</option>
                             <option value="Webinar/Events">Zoom Webinars / Events Only</option>
+                        </select>
+                    </div>
+
+                    <div className={styles.inputWrapper}>
+                        <label htmlFor="budget">Project Budget</label>
+                        <select id="budget" name="budget" required defaultValue="">
+                            <option value="" disabled>Select your estimated budget...</option>
+                            <option value="₹25K - ₹50K">₹25,000 - ₹50,000</option>
+                            <option value="₹50K - ₹1L">₹50,000 - ₹1,00,000</option>
+                            <option value="₹1L - ₹5L">₹1,00,000 - ₹5,00,000</option>
+                            <option value="₹5L+">₹5,00,000+</option>
+                            <option value="Not Sure">Not Sure Yet</option>
                         </select>
                     </div>
 

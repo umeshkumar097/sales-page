@@ -5,7 +5,7 @@ import nodemailer from "nodemailer";
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { leadType, name, company, email, phone, projectType, message } = body;
+        const { leadType, name, company, email, phone, projectType, message, budget, source } = body;
 
         if (!name || !email || !phone || !projectType) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -38,6 +38,33 @@ export async function POST(request: Request) {
         }
         // --- END SPAM PROTECTION ---
 
+        // --- AI LEAD SCORING ---
+        const calculateLeadScore = (budgetStr: string | undefined, messageStr: string | undefined) => {
+            let points = 0;
+            
+            // High budget gives more points
+            if (budgetStr) {
+                if (budgetStr.includes("5L") || budgetStr.includes("5 Lakh")) points += 3;
+                else if (budgetStr.includes("1L") || budgetStr.includes("2L")) points += 2;
+                else points += 1; // 25k-50k
+            }
+
+            // Longer, detailed messages show higher intent
+            if (messageStr && messageStr.length > 50) points += 1;
+            if (email.endsWith("@gmail.com") || email.endsWith("@yahoo.com")) {
+                // Free email domains get standard points, business domains get bonus
+            } else {
+                points += 1; // Bonus for corporate email
+            }
+
+            if (points >= 3) return "🔥 Hot";
+            if (points === 2) return "🟡 Warm";
+            return "❄️ Cold";
+        };
+
+        const aiLeadScore = calculateLeadScore(budget, message);
+        const actualSource = source || "Website Organic";
+
         // 1. Save to Database
         const lead = await prisma.lead.create({
             data: {
@@ -48,6 +75,10 @@ export async function POST(request: Request) {
                 phone,
                 projectType,
                 message: message || null,
+                budget: budget || null,
+                source: actualSource,
+                score: aiLeadScore,
+                status: "New Lead"
             },
         });
 
@@ -145,6 +176,9 @@ export async function POST(request: Request) {
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Phone:</strong> ${phone}</p>
         <p><strong>Service:</strong> ${projectType}</p>
+        <p><strong>Budget:</strong> ${budget || "Not Disclosed"}</p>
+        <p><strong>Source:</strong> ${actualSource}</p>
+        <p><strong>AI Score:</strong> ${aiLeadScore}</p>
         <p><strong>Message:</strong> ${message || "N/A"}</p>
       `,
         };
@@ -158,7 +192,7 @@ export async function POST(request: Request) {
             if (!WHATSAPP_PHONE_ID || !WHATSAPP_ACCESS_TOKEN) return;
             
             try {
-                const whatsappMessage = `*New Lead Captured (${leadType || "General"})* 🚀\n\n*Name:* ${name}\n*Company:* ${company || "N/A"}\n*Email:* ${email}\n*Phone:* ${phone}\n*Service:* ${projectType}\n*Message:* ${message || "N/A"}`;
+                const whatsappMessage = `*New Lead Captured [${aiLeadScore}]* 🚀\n\n*Name:* ${name}\n*Email:* ${email}\n*Phone:* ${phone}\n*Service:* ${projectType}\n*Budget:* ${budget || "N/A"}\n*Source:* ${actualSource}\n*Message:* ${message || "N/A"}`;
                 
                 await fetch(`https://graph.facebook.com/v17.0/${WHATSAPP_PHONE_ID}/messages`, {
                     method: 'POST',
@@ -182,7 +216,7 @@ export async function POST(request: Request) {
             }
         };
 
-        // 4. Send WhatsApp Client Auto-Responder (Template Message)
+        // 4. Send WhatsApp Client Auto-Responder (Direct Text Message instead of Template)
         const sendWhatsAppClient = async () => {
             const WHATSAPP_PHONE_ID = process.env.WHATSAPP_PHONE_ID;
             const WHATSAPP_ACCESS_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN;
@@ -193,6 +227,8 @@ export async function POST(request: Request) {
                 // Clean the phone number (remove +, spaces, brackets, dashes)
                 const cleanPhone = phone.replace(/\D/g, ''); 
                 
+                const clientAutoReply = `Hi ${name},\n\nThank you for contacting Aiclex Technologies.\n\nOur team will review your requirement for *${projectType}*.\nWe will contact you shortly.\n\nYou can also schedule a call directly with our team here:\nhttps://m.aiclex.in/#contact`;
+
                 await fetch(`https://graph.facebook.com/v17.0/${WHATSAPP_PHONE_ID}/messages`, {
                     method: 'POST',
                     headers: {
@@ -203,21 +239,10 @@ export async function POST(request: Request) {
                         messaging_product: "whatsapp",
                         recipient_type: "individual",
                         to: cleanPhone,
-                        type: "template",
-                        template: {
-                            name: "client_welcome_message", // You must create this template in Meta Business Manager
-                            language: {
-                                code: "en" // Adjust based on your Meta Template language (e.g., 'en' or 'en_US')
-                            },
-                            components: [
-                                {
-                                    type: "body",
-                                    parameters: [
-                                        { type: "text", text: name }, // {{1}} - Client Name
-                                        { type: "text", text: projectType } // {{2}} - Project/Service Type
-                                    ]
-                                }
-                            ]
+                        type: "text",
+                        text: {
+                            preview_url: true,
+                            body: clientAutoReply
                         }
                     })
                 });

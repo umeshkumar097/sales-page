@@ -390,3 +390,26 @@
     background: rgba(239, 68, 68, 0.1);
     border-color: #ef4444;
 }
+
+.statusSelect {
+    background: rgba(30, 41, 59, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    color: var(--text-primary);
+    padding: 0.4rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 130px;
+}
+
+.statusSelect:hover {
+    border-color: var(--accent-primary);
+}
+
+.statusSelect:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}

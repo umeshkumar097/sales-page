@@ -18,6 +18,15 @@ model Lead {
   message     String?
   createdAt   DateTime @default(now())
 
+  // CRM V2 Pipeline & Tracking Fields
+  status      String   @default("New Lead") // Enum: New Lead, Contacted, Meeting Scheduled, Proposal Sent, Negotiation, Won, Lost
+  source      String   @default("Website Organic")
+  budget      String?
+  score       String?  // 🔥 Hot, 🟡 Warm, ❄️ Cold
+  notes       String?  @db.Text
+  projectValue Int?    // Stored numerically for Analytics (Revenue Generated)
+  followUpDate DateTime?
+
   // Relation to Meetings
   meetings    Meeting[]
 }
